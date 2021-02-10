@@ -1,0 +1,9 @@
+{
+    "python.linting.pycodestyleEnabled": true,
+    "python.linting.pycodestyleArgs": [
+        "--ignore=E501"
+    ],
+    "git.ignoreLimitWarning": true,
+    "python.pythonPath": "d:\\androidproject\\expound projects\\expound-backend-master\\venv\\Scripts\\python.exe"
+
+}

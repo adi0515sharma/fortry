@@ -1,0 +1,8 @@
+Shortcut                                  Use
+
+alt+h                                    Dashboard
+ctrl+i                                    Inventory
+alt+l                                     Logout(windows)
+ctrl+l                                      Logout(mac)
+alt+s                                     admin settings
+ctrl +a                                   leave Application

@@ -1,0 +1,82 @@
+{% load static %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Expound Email</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=ABeeZee">
+</head>
+<body style="margin: 0; padding: 0;">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%"> 
+        <tr>
+            <td style="padding: 10px 0 0px 0;">
+                <table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="border: 1px solid #cccccc; border-collapse: collapse;">
+                    <tr>
+                        <td align="center" bgcolor="white" style="padding: 40px 0 30px 0; color: white; font-size: 28px; font-weight: bold; font-family: Arial, sans-serif;border-bottom: 2px solid rgb(12,62,121);">
+                            <img src="https://expoundtechnivo.com/long_logo.png" alt="Expound Technivo Pvt Ltd." width="600" height="120" style="display: block;" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td bgcolor="#ffffff" style="padding: 40px 30px 0px 30px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                <tr>
+                                    <td style="color: #153643; font-family: Arial, sans-serif; font-size: 24px;">
+                                        <center><b style="font-family: ABeeZee;color: rgb(131,131,131);">
+                                            Thanks for applying.</b></center>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 20px 0 7px 0; color: #153643; font-family: ABeeZee; font-size: 16px; line-height: 20px;">
+                                        <span style="color: green;"> <b>Hi {{ apply.name }},</b><br> <br> </span>
+                                        Thank you for applying for {{ apply.job.job_title }} role and showing interest in our organization. <br>
+                                        Our HR team will carefully review your application and will get back to you shortly.
+                                        <br>
+                                        <br>
+                                        See you soon,
+                                        <br>
+                                        <span style="color:rgb(131,131,131)">Expound Career</span>
+                                        <br>
+                                        <br>
+                                        <br>
+                                        <br>
+                                        <hr>
+                                        <p> <small style="color: grey;"> This is an auto-reply but if you have any doubts, please feel free to reply to this email or reach out to our hr at hr@expoundtechnivo.com. </small></p>
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 30px 30px 30px 30px;background-color: rgb(12,62,121);">
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                <tr>
+                                    <td style="color: #ffffff; font-family: ABeeZee; font-size: 11px;" width="75%">You received this email to let you know we have received your application. <br>
+                                        © 2020 ExpoundTechnivo Pvt Ltd, 702 NIBR Corporate Park 1Aerocity, Mumbai, MH 400072, India <br>
+                                        <small> This is an automated reply from Expound Career</small>
+                                        </td>
+                                    <td align="right" width="25%">
+                                        <table border="0" cellpadding="0" cellspacing="0">
+                                            <tr>
+                                                <td style="font-family: Arial, sans-serif; font-size: 20px; font-weight: bold;">
+                                                    <a href="https://www.expoundtechnivo.com/" style="color: #ffffff;">
+                                                        <i class="fa fa-link"></i>
+                                                    </a>
+                                                </td>
+                                                <td style="font-size: 0; line-height: 0;" width="20">&nbsp;</td>
+                                                
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

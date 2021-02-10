@@ -1,0 +1,22 @@
+{% extends 'base1.html' %}
+{% block title %}
+DELETE
+{% endblock %}
+
+
+{% block content %}
+    <div style="margin-left: 80px; margin-top: 80px;">
+        <h1>Are you sure you want the registerd problem:{{ problem.title }}</h1>
+        <form action="{% url 'HR_problems:delete_prob' problem.id%}" method="post">
+            {% csrf_token %}
+            <input type="submit" class="btn btn-primary">
+        </form>
+    
+        <a href="#" class="btn btn-info">cancel</a>
+    </div>
+    <script>
+    $(document).ready(function() {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+{% endblock %}

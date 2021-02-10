@@ -1,0 +1,18 @@
+{% extends 'base1.html' %}
+
+
+{% block title %}
+     Vendor Create view
+{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class = "container card shadow" style="padding: 5em;">
+	<h1>Create new Vendor</h1>
+	<form method = 'POST' action= '' enctype = "multipart/form-data" novalidate id = "profile-form">{% csrf_token %}
+		{{form|crispy}}
+		<input class="btn btn-sm btn-info" type="submit" value = "Submit" />
+	</form>
+</div>
+{% endblock %}

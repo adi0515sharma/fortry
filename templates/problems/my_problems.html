@@ -1,0 +1,264 @@
+{% extends 'base1.html' %}
+{% load static %}
+
+{% block title %}
+    MY Issues
+{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/All-Tickets.css' %}">
+
+<form action="" method="get">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light second-navbar" style="margin-left: 0px; margin-top: -40px;">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent2" aria-controls="navbarSupportedContent2" aria-expanded="false" aria-label="Toggle navigation2">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse bg-light" id="navbarSupportedContent2">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item form-inline my-2 my-lg-0">
+                    <input type="checkbox" class="select-all-checkbox" />
+                </li>
+                <li class="nav-item active form-inline my-2 my-lg-0 selection-list">
+                    <label for="sel1" class="nav-link">Sort by: </label>
+                    <select name="ordering_by" id="sel1" class="selectpicker" data-width="150px" data-style="btn-white" onchange="this.form.submit()">  
+                        <option>select</option>
+                        <option value="due_by">due_by</option>
+                        
+                    </select>
+                </li>
+                <li class="nav-item active form-inline my-2 my-lg-0 selection-list">
+                    <label for="sel2" class="nav-link">Order: </label>
+                    <select name="asddes" id="sel2" class="selectpicker" data-width="150px" data-style="btn-white" onchange="this.form.submit()">
+                        <option>select</option>
+                        <option value="ascending">Ascending</option>
+                        <option value="descending">Descending</option>
+                    </select>
+                </li>
+            </ul>
+            <ul class=" navbar-nav my-2 my-lg-0">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">
+                        <span class="make-box">
+                            Export
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item active">
+                    <span class="nav-link">
+                        1-3 of 3
+                    </span>
+                </li>
+                <li class="nav-item active move-buttons nav-link">
+                    <a class="" href="#">
+                        <span class="make-box" data-toggle="tooltip" data-placement="bottom" title="Previous Page">
+                            <img src="{% static 'images/left-move.png' %}" />
+                        </span>
+                    </a>
+                    <a class="" href="#">
+                        <span class="make-box" data-toggle="tooltip" data-placement="bottom" title="Next Page">
+                            <img class="flip-image" src="{% static 'images/left-move.png' %}" />
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item show-filters active nav-link" onclick=showFilters()>
+                    <div data-toggle="collapse" data-target="#filter-list-id" aria-controls="filter-list-id" aria-expanded="false" aria-label="Toggle Filters">
+                        <span class="make-box " data-toggle="tooltip" data-placement="bottom" title="Show Filters">
+                            <img src="{% static 'images/show.png' %}" />
+                        </span>
+                    </div>
+                </li>
+                <li class="nav-item hide-filters nav-link" onclick=hideFilters()>
+                    <div data-toggle="collapse" data-target="#filter-list-id" aria-controls="filter-list-id" aria-expanded="false" aria-label="Toggle Filters">
+    
+                        <span class="make-box " data-toggle="tooltip" data-placement="bottom" title="Hide Filters" data-toggle="collapse" data-target="#filter-list-id" aria-controls="filter-list-id" aria-expanded="false" aria-label="Toggle Filters">
+                            <img class="flip-image" src="{% static 'images/show.png' %}" />
+                        </span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</form>
+
+        <div class="container-fluid row main-container-all-tickets" style="margin: 10px 0px;">
+            <!---------------------------- TICKET LIST START --------------------------------------->
+            <div class="ticket-list col-md">
+                {% if problems %}
+                {% for problem in problems %}
+                <div class="item row">
+                    <div>
+                        <input type="checkbox" class="checkbox-of-item" />
+                    </div>
+                    <div class="left col-md">
+                        <div class="heading">
+                            <a href="{% url 'HR_problems:view_prob' problem.id %}">
+                                {{ problem.title }}
+                            </a>
+
+                        </div>
+                        <div class="details row">
+                            <div class="col-md">
+                                <img src="{% static 'images/name.png' %}" />
+                                <span class="agent">
+                                    Created by {{ problem.user }}
+                                </span>
+                            </div>
+                            <div class="col-md">
+                                <img src="{% static 'images/calendar.png' %}" /> Item -- {% if problem.hardware_item %} {{ problem.hardware_item }}{% endif %}{% if problem.software_item %}{{ problem.software_item }}{% endif %}
+                            </div>
+                            <div class="col-md">
+                                <img src="{% static 'images/time.png' %}" /> Due from {{ problem.due_by }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="right col-md">
+                        <div class="selection-list" data-toggle="tooltip" data-placement="left" title="Priority">
+                            
+
+                            <a href="{% url 'HR_problems:update_prob' problem.id %}" class="btn btn-sm btn-info">Update</a>
+                            <a href="{% url 'HR_problems:delete_prob' problem.id %}" class="btn btn-sm btn-danger">Delete</a>
+                            <!-- <select class="selectpicker" data-width="150px" data-style="btn-white">
+                                <option>Low</option>
+                                <option>Medium</option>
+                                <option>High</option>
+                                <option>Urgent</option>
+                            </select> -->
+                        </div>
+
+                        
+                        
+
+
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <div class="card">
+                    <div class="card-body">
+                        <h1>Sorry,There are no issues to See............</h1>
+                    </div>
+                </div>
+                {% endif %}
+
+            </div>
+            <!---------------------------- TICKET LIST END --------------------------------------->
+
+
+            <!---------------------------- FILTER LIST START --------------------------------------->
+            <div class="collapse filter-list col-md-3 order-first order-md-last" id="filter-list-id">
+                <form action="" method="get">
+                <div class="for-scrolling">
+                    <div class="heading">
+                        <div>
+                            FILTERS
+                        </div>
+                        <div class="pic" onclick=hideFilters()>
+                            +
+                        </div>
+                    </div>
+                    <div class="list">
+
+                        <div class="item">
+                            <div class="name">
+                                Issue Title:
+                            </div>
+                            <select name="issue_title" class="selectpicker ml-2 filter-sel" data-live-search="true" multiple title="Any" id="filter-sel-1">
+                                {% for obj in problems %}
+                                <option value="{{ obj }}">{{ obj }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+
+                        <div class="item">
+                            <div class="name">
+                                Priority
+                            </div>
+                            <select name="priority" class="selectpicker ml-2 filter-sel" data-live-search="true" multiple title="Any" id="filter-sel-1">
+                                <option value="low">low</option>
+                                <option value="medium">medium</option>
+                                <option value="high">high</option>
+                            </select>
+                        </div>
+
+                        <div class="item">
+                            <div class="name">
+                                Impact
+                            </div>
+                            <select name="impact" class="selectpicker ml-2 filter-sel" data-live-search="true" multiple title="Any" id="filter-sel-1">
+                                <option value="low">low</option>
+                                <option value="high">high</option>
+                            </select>
+                        </div>
+
+                        <div class="item">
+                            <div class="name">
+                                Due Before
+                            </div>
+                            <input type="date" name="due_before" id="">
+                        </div>
+
+                        <div class="item">
+                            <div class="name">
+                                Hardware Item
+                            </div>
+                            <select name="hardware_item" class="selectpicker ml-2 filter-sel" data-live-search="true" multiple title="Any" id="filter-sel-1">
+                                {% for hard in hardware %}
+                                    <option value="{{ hard }}">{{ hard }}</option> 
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="item">
+                            <div class="name">
+                                Software Item
+                            </div>
+                            <select name="software_item" class="selectpicker ml-2 filter-sel" data-live-search="true" multiple title="Any" id="filter-sel-1">
+                                {% for hard in software %}
+                                    <option value="{{ hard }}">{{ hard }}</option> 
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+
+                    </div>
+                    <!--list end-->
+                </div>
+                <button class="apply-button-div btn-block apply-button-div-all-tickets" type="submit" name="filter">
+                    <div class="apply-button">
+                        Apply
+                    </div>
+                </button>
+                </form>
+            </div>
+            <!--filter list end-->
+        </div>
+    </div>
+    
+
+<!-- Bootstrap -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+<!-- For styling select tags -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script> -->
+
+<!--For tooltip -->
+<script>
+    $(document).ready(function() {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+
+
+<!--Js-->
+<script src="{% static 'js/All-Tickets.js' %}"></script>
+
+<!--Js for navbar and sidebar -->
+<script src="{% static 'js/Main.js' %}"></script>
+
+
+{% endblock %}

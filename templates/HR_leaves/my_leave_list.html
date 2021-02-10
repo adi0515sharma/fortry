@@ -1,0 +1,56 @@
+{% extends 'base1.html' %}
+
+{% block title %}
+    My Leaves
+{% endblock %}
+
+
+{% block content %}
+    <div class="container">
+        <div class="card shadow" style="padding: 1rem;">
+        <h1><strong>List of your approved leaves..</strong></h1>
+        </div>
+        <br>
+    <div class="card shadow" style="padding: 1rem;">
+    <div class="row">
+        <div class="col-md-12">
+            
+                <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Leave Title</th>
+                        <th scope="col">Start date</th>
+                        <th scope="col">End date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for leave in leaves %}
+                      <tr data-toggle="tooltip" title="{{ leave.reason }}">
+                        {% if leave.approved == True %}
+                        <th scope="row"><i class="fa fa-circle" style="color: chartreuse;"></i></th>
+                        <td>{{ leave.title }}</td>
+                        <td>{{ leave.start }}</td>
+                        <td>{{ leave.end  }}</td>
+                        {% elif leave.approved == False %}
+                        <th scope="row"><i class="fa fa-circle" style="color: rgb(255, 72, 0);"></i></th>
+                        <td>{{ leave.title }}</td>
+                        <td>{{ leave.start }}</td>
+                        <td>{{ leave.end  }}</td>
+                        {% else %}
+                        <th scope="row"><i class="fa fa-circle" style="color: rgb(0, 255, 200);"></i></th>
+                        <td>{{ leave.title }}</td>
+                        <td>{{ leave.start }}</td>
+                        <td>{{ leave.end  }}</td>
+                        {% endif %}
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+            
+        </div>
+    </div>
+    </div>
+    </div>
+    
+{% endblock %}

@@ -1,0 +1,250 @@
+{% extends 'base1.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div style="margin-left: -40px;">
+<link rel="stylesheet" href="{% static 'css/Single-Ticket.css' %}">
+<div class="container-fluid row main-container-single-ticket">
+    <div class="col-md-7">
+        <div class="white-container">
+            <div class="heading-row">
+                <div class="icon">
+                    <img src="{% static 'images/single-ticket-heading-image.png' %}" />
+                </div>
+                <div class="heading">
+                    {{ problem.title }}
+                    {{ problem.item.users }}
+                    <div class="float-right"></div>
+                </div>
+            </div>
+            <div class="created-by">
+                Created by <span class="name">{{ problem.user }}</span>
+            </div>
+            <div class="inbox-message">
+                <div class="who">
+                    <div class="pic">
+                        <img src="{% static 'images/single-ticket-user.png' %}" />
+                    </div>
+                    <div class="right">
+                        <div class="name">
+                            <span>{{ problem.user }}</span> reported via the feedback widget
+                        </div>
+                        <div class="time">
+                            {{ problem.due_by }}
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="content">
+                    <p>
+                        {{ problem.issue }}
+                    </p>
+                    <p>Thanks,<br /> {{ problem.user }}.
+                    </p>
+                </div>
+
+            </div>
+            <p><h4>Comments</h4><a class="btn btn-sm btn-success cmntbtn" style="color: white;">Hide/Show</a></p>
+            <ul class="Comment" style="padding-left: 0px;">
+                {% for comment in comments %}
+                <div class="inbox-message">
+                    <div class="who">
+                        <div class="pic">
+                            <img src="{% static 'images/single-ticket-user.png' %}" />
+                        </div>
+                        <div class="right">
+                            <div class="name">
+                                <span>{{ comment.user }}</span> commented via the feedback widget
+                            </div>
+                            <div class="time">
+                                {{ comment.created_on }}
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="content cmntbdy">
+                        <p>
+                            {{ comment.body}}
+                        </p>
+                    </div>
+                </div>
+                <br>
+                {% endfor %}
+            </ul>
+            
+                <div id="toolbar-container-single-ticket"></div>
+                <form method ="POST">
+                    {% csrf_token %}
+                    {{ comment_form.body }}
+                    <br>
+                    <input class="btn btn-warning" type="submit" name="comment">
+                </form>
+            
+        </div>
+    </div>
+    <!--left column end-->
+
+    <!--right column start-->
+    <div class="col-md-4">
+        <!--Accordion wrapper-->
+        <div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
+
+            <!-- Accordion card start -->
+            <div class="card">
+                <!-- Card header -->
+                <div class="card-header" role="tab" id="headingOne1">
+                    <div data-toggle="collapse" data-parent="#accordionEx" href="#collapseOne1" aria-expanded="false" aria-controls="collapseOne1" class="accordion-toggle collapsed">
+                        <h5 class="mb-0">
+                            CONTACT DETAILS
+                        </h5>
+                        <div class="icon"><img src="{% static 'images/single-ticket-arrow.png' %}" /></div>
+                    </div>
+                </div>
+                <!-- Card body -->
+                <div id="collapseOne1" class="collapse" role="tabpanel" aria-labelledby="headingOne1" data-parent="#accordionEx">
+                    <div class="card-body">
+                        <div class="who">
+                            <div class="pic">
+                                <img src="{% static 'images/single-ticket-user.png' %}" />
+                            </div>
+                            <div class="right">
+                                {{ problem.user.username }}
+                            </div>
+                        </div>
+                        <div class="email">
+                            <div class="heading">
+                                Email
+                            </div>
+                            <div class="content">
+                                {{ problem.user.email }}
+                            </div>
+                        </div>
+                        <div class="timeline-container">
+                            <div class="timeline-container-heading">
+                                Timeline
+                            </div>
+                            <div class="timeline">
+                                <div class="item">
+                                    <div class="icon">
+                                        <img src="{% static 'images/single-ticket-open.png' %}" />
+                                    </div>
+                                    <div class="content">
+                                        <div class="heading">
+                                            {{ problem.title }}
+                                        </div>
+                                        <div class="time">
+                                            {{ problem.due_by }}
+                                        </div>
+                                        <div class="status">
+                                            Status: {{ problem.current_status }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="item">
+                                    <div class="icon">
+                                        <img src="{% static 'images/single-ticket-resolved.png' %}" />
+                                    </div>
+                                    <div class="content">
+                                        <div class="heading">
+                                            Vintage Lamp - In Stock
+                                        </div>
+                                        <div class="time">
+                                            15 Jul 2020, 07:34 PM
+                                        </div>
+                                        <div class="status">
+                                            Status: Resolved
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Accordion card end-->
+
+                <!-- Accordion card start -->
+                <div class="card">
+                    <!-- Card header -->
+                    <div class="card-header" role="tab" id="headingTwo2">
+                        <div data-toggle="collapse" data-parent="#accordionEx" href="#collapseTwo2" aria-expanded="false" aria-controls="collapseTwo2" class="accordion-toggle collapsed">
+                            <h5 class="mb-0">
+                                TIME LOGS
+                            </h5>
+                            <div class="icon"><img src="{% static 'images/single-ticket-arrow.png' %}" /></div>
+                        </div>
+                    </div>
+                    <!-- Card body -->
+                    <div id="collapseTwo2" class="collapse" role="tabpanel" aria-labelledby="headingTwo2" data-parent="#accordionEx">
+                        <div class="card-body">
+                            Start tracking the time you spend on this ticket
+                        </div>
+                    </div>
+                </div>
+                <!-- Accordion card end-->
+
+                <!-- Accordion card start -->
+                <div class="card">
+                    <!-- Card header -->
+                    <div class="card-header" role="tab" id="headingThree3">
+                        <div data-toggle="collapse" data-parent="#accordionEx" href="#collapseThree3" aria-expanded="false" aria-controls="collapseThree3" class="accordion-toggle collapsed">
+                            <h5 class="mb-0">
+                                TODO
+                            </h5>
+                            <div class="icon"><img src="images/single-ticket-arrow.png" /></div>
+                        </div>
+                    </div>
+                    <!-- Card body -->
+                    <div id="collapseThree3" class="collapse" role="tabpanel" aria-labelledby="headingThree3" data-parent="#accordionEx">
+                        <div class="card-body">
+                            Create your todo list
+                        </div>
+                    </div>
+                </div>
+                <!-- Accordion card end-->
+
+                <!-- Accordion card start -->
+                <div class="card">
+                    <!-- Card header -->
+                    <div class="card-header" role="tab" id="headingFour4">
+                        <div data-toggle="collapse" data-parent="#accordionEx" href="#collapseFour4" aria-expanded="false" aria-controls="collapseFour4" class="accordion-toggle collapsed">
+                            <h5 class="mb-0">
+                                HEADING
+                            </h5>
+                            <div class="icon"><img src="images/single-ticket-arrow.png" /></div>
+                        </div>
+                    </div>
+                    <!-- Card body -->
+                    <div id="collapseFour4" class="collapse" role="tabpanel" aria-labelledby="headingFour4" data-parent="#accordionEx">
+                        <div class="card-body">
+                            Content
+                        </div>
+                    </div>
+                </div>
+                <!-- Accordion card end-->
+
+            </div>
+            <!-- Accordion wrapper -->
+
+        </div>
+        <!--right column end-->
+    </div>
+
+
+    <script src="{% static 'js/Single-Ticket.js' %}"></script>
+
+    <script>
+        $(document).ready(function(){
+            $(".cmntbtn").click(function(){
+                $(".Comment").toggle();
+            });
+            $(".Comment").click(function(){
+                $(".cmntbdy").toggle();
+            })
+        });
+    </script>
+
+</div>
+{% endblock %}

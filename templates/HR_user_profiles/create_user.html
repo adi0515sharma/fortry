@@ -1,0 +1,27 @@
+{% extends "base1.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<style>
+	
+</style>
+<div class="container card" style="margin-top: 80px;  text-align-last: center;">
+	<div class="card-body">
+    	<form method = "POST" style="width: 100%;">
+			{% csrf_token %}
+			<fieldset class="form-group">
+				<legend class="border-bottom mb-4">Create Employee Account</legend>
+                {{ form|crispy }}
+			</fieldset>
+			<div class="form-group">
+				<button class="btn btn-outline-info" type="submit">Create</button>
+			</div>
+		</form>
+		</div>
+	</div>
+</div>
+<script>
+    $(document).ready(function() {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+{% endblock content %}

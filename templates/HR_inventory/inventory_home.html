@@ -1,0 +1,158 @@
+{% extends 'base1.html' %}
+{% load static %}
+{% block head %}
+<style>
+
+.main-container-settings {
+    
+    padding: 0px;
+    width: 100%;
+    margin-right: 0.5rem;
+    margin-bottom: 3rem;
+}
+
+.main-container-settings .box {
+    border: 1px solid #cfd7df;
+    box-shadow: 0 2px 4px 0 rgba(24, 50, 71, .08);
+    border-radius: 4px;
+    background-color: white;
+    margin: 0rem 10rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+@media(max-width: 600px) {
+    .main-container-settings .box {
+        margin: 0rem 3rem;
+    }
+}
+
+.main-container-settings .box .heading {
+    margin-left: 1rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.main-container-settings .box .row {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.main-container-settings .box .row .setting {
+    display: flex;
+    align-items: center;
+    margin: 0.5rem 1rem;
+    padding: 1rem;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.main-container-settings .box .row .setting:hover {
+    border: 1px solid rgba(17, 74, 133, 0.6);
+    background-image: radial-gradient(white, rgba(135, 135, 135, 0.3));
+}
+
+.main-container-settings .box .row .setting .icon {
+    margin-right: 1rem;
+}
+
+.main-container-settings .box .row .setting .icon img {
+    height: 2rem;
+    width: 2rem;
+}
+
+.main-container-settings .box .row .empty {
+    visibility: hidden;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+
+
+<div class="container-fluid row main-container-settings">
+    
+    <div class="box container-fluid">
+        <div class="heading">
+            Inventory
+        <hr />
+        <div class="row">
+            <div class="col-md setting" onclick="location.href='{% url 'HR_inventory:hardwares' %}'">
+                <div class="icon">
+                    <img src="{% static 'images/settings-agent.png' %}" />
+                </div>
+                <div class="name">
+                    Hardware
+                </div>
+            
+            </div>
+            <div class="col-md setting" onclick="location.href='{% url 'HR_inventory:softwares' %}'">
+                <div class="icon">
+                    <img src="{% static 'images/open.png' %}" />
+                </div>
+                <div class="name">
+                    Software
+                </div>
+            </div>
+            <div class="col-md setting" onclick="location.href='{% url 'HR_inventory:vendors' %}'">
+                <div class="icon">
+                    <img src="{% static 'images/settings-group.png' %}" />
+                </div>
+                <div class="name">
+                    Vendors
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md setting" onclick="location.href='{% url 'HR_inventory:hardware-create' %}'">
+                <div class="icon">
+                    <img src="{% static 'images/settings-helpdesk.png' %}" />
+                </div>
+                <div class="name">
+                    Add Hardware
+                </div>
+            </div>
+            <div class="col-md setting" onclick="location.href='{% url 'HR_inventory:software-create' %}'">
+                <div class="icon">
+                    <img src="{% static 'images/ticket-fields.png' %}" />
+                </div>
+                <div class="name">
+                    Add Software
+                </div>
+            </div>
+            <div class="col-md setting" onclick="location.href='{% url 'HR_inventory:vendor-create' %}'">
+                <div class="icon">
+                    <img src="{% static 'images/settings-field-service.png' %}" />
+                </div>
+                <div class="name">
+                    Add Vendor
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+{% comment %} 
+{% extends "base.html" %}
+{% block content %}
+<style>
+    a.inventory{
+        display: block;
+        font-size: xx-large;
+    }
+</style>
+<div class="container" style="margin-left: 80px; margin-top: 80px;">
+    <a class="inventory" href="{% url 'HR_inventory:hardwares' %}">Hardware</a>
+    <a class="inventory" href="{% url 'HR_inventory:softwares' %}">Software</a>
+    <a class="inventory" href="{% url 'HR_inventory:vendors' %}">Vendors</a>
+</div>   
+{% endblock %} {% endcomment %}

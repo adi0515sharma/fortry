@@ -1,0 +1,52 @@
+{% extends "base1.html" %}
+{% block content %}
+<style>
+    table{
+        margin-top: 100px;
+    }
+    table, th, td, tr{
+        border: none;
+    }
+    td{
+        font-weight: bold;
+    }
+    body, input{
+        text-align: center;
+    }
+</style>
+<div class="container card" style="margin-left: 130px; margin-top: 80px;">
+    <h1>Enter Working days</h1>
+    <form>
+<table class="table card-body">
+      
+          <tr>
+    <td>January<input class="form-control" name="january"  type="number" value="{{january}}" max=31 min=0></td>
+    <td>February<input class="form-control" name="february"   type="number" value="{{february}}" max=29 min=0></td>
+</tr>
+<tr>
+    <td>March<input class="form-control" name="march"   type="number" value="{{march}}" max=31 min=0></td>
+    <td>April<input class="form-control" name="april"   type="number" value="{{april}}" max=30 min=0></td>
+</tr>
+<tr>
+    <td>May<input class="form-control" name="may"   type="number" value="{{may}}" max=31 min=0></td>
+    <td>June<input class="form-control" name="june"   type="number" value="{{june}}" max=30 min=0></td>
+</tr>
+<tr>
+    <td>July<input class="form-control" name="july"   type="number" value="{{july}}" max=31 min=0></td>
+    <td>August<input class="form-control" name="august"   type="number" value="{{august}}" max=31 min=0></td>
+</tr>
+<tr>
+    <td>September<input class="form-control" name="september"   type="number" value="{{september}}" max=30 min=0></td>
+    <td>October<input class="form-control" name="october"   type="number" value="{{october}}" max=31 min=0></td>
+</tr>
+<tr>
+    <td>November<input class="form-control" name="november"   type="number" value="{{november}}" max=30 min=0></td>
+    <td>December<input class="form-control" name="december"   type="number" value="{{december}}" max=31 min=0></td>
+</tr>
+
+</table>
+<button type="submit" class="btn btn-outline-info">Update</button>
+</form>
+</div>
+
+{% endblock %}

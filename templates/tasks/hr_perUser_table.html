@@ -1,0 +1,278 @@
+{% extends 'base1.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/eventscal.css' %}">
+<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> -->
+<!-- <link rel="stylesheet" href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome-font-awesome.min.css"> -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/air-datepicker/2.2.3/css/datepicker.css">
+<link rel="stylesheet" href="{% static 'css/forms/StyleFormApproval.css' %}">
+{% endblock %}
+{% block content %}
+
+
+
+<div class="p-2 ml-5 mr-5" >
+  <!-- <h2 class="mb-4">Full Calendar</h2> -->
+  <div class="card shadow">
+    <div class="card-body p-4">
+      <center>
+        <div class="p-1 ml-2 mr-5">
+          <h3><b> Timesheet of employee : {{ user }}</b>
+            
+          </h3>
+        </div>
+        <hr>
+      </center>
+      <b>Approval Status</b>
+      <div class="float-right"><a class="btn btn-sm" href="#approvals"
+        style="background-color: darkorange; color: white;">Approve</a></div>
+      <hr>
+      <div class="row text-center">
+        <div class="col-sm-3">
+
+          <img src="{% static 'images/check.png' %}" alt="yes" style="width: 30px; display:none;" id="check1">
+          <img src="{% static 'images/warning.png' %}" alt="yes" style="width: 30px; display:none;" id="noIdea1">
+          <img src="{% static 'images/cross.png' %}" alt="yes" style="width: 30px; display:none;" id="cross1">
+
+
+          <input class="btn btn-sm btn-info" type="button" name="Approve" value="Week 1">
+        </div>
+        <div class="vl"></div>
+        <div class="col-sm-3">
+
+          <img src="{% static 'images/check.png' %}" alt="yes" style="width: 30px; display:none;" id="check2">
+          <img src="{% static 'images/warning.png' %}" alt="yes" style="width: 30px; display:none;" id="noIdea2">
+          <img src="{% static 'images/cross.png' %}" alt="yes" style="width: 30px; display:none;" id="cross2">
+
+          <input class="btn btn-sm btn-info" type="button" name="Approve" value="Week 2">
+        </div>
+        <div class="vl"></div>
+        <div class="col-sm-3">
+
+          <img src="{% static 'images/check.png' %}" alt="yes" style="width: 30px; display:none;" id="check3">
+          <img src="{% static 'images/warning.png' %}" alt="yes" style="width: 30px; display:none;" id="noIdea3">
+          <img src="{% static 'images/cross.png' %}" alt="yes" style="width: 30px; display:none;" id="cross3">
+
+          <input class="btn btn-sm btn-info" type="button" name="Approve" value="Week 3">
+        </div>
+        <div class="vl"></div>
+        <div class="col-sm-2">
+
+          <img src="{% static 'images/check.png' %}" alt="yes" style="width: 30px; display:none;" id="check4">
+          <img src="{% static 'images/warning.png' %}" alt="yes" style="width: 30px; display:none;" id="noIdea4">
+          <img src="{% static 'images/cross.png' %}" alt="yes" style="width: 30px; display:none;" id="cross4">
+
+          <input class="btn btn-sm btn-info" type="button" name="Approve" value="Week 4">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="p-2 ml-5 mr-5">
+  <!-- <h2 class="mb-4">Full Calendar</h2> -->
+  <div class="card shadow">
+    <p></p>
+
+    <div class="card-body p-4">
+      <div id="calendar"></div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<div class="row">
+  <div class="col-sm-6">
+    <div class="p-2 ml-5">
+      <!-- <h2 class="mb-4">Full Calendar</h2> -->
+      <div class="card shadow" id="approvals" >
+        <div class="card-body p-4">
+          <div style="text-align: center;">
+
+            <h5>Approve Timesheet</h5>
+
+          </div>
+          <hr>
+          <form class="form" name="formApprove" action="{% url 'HR_tasks:json_data' user.id %}" method="post">
+            {% csrf_token %}
+            <div>
+              <label for="month">Select Month:</label>
+              <select name="month" id="approvalmonth">
+                <option value="1">January</option>
+                <option value="2">February</option>
+                <option value="3">March</option>
+                <option value="4">April</option>
+                <option value="5">May</option>
+                <option value="6">June</option>
+                <option value="7">July</option>
+                <option value="8">August</option>
+                <option value="9">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
+              </select>
+            </div>
+            <div>
+              <label for="comment">Comment:</label>
+              <div class="comment">
+                {{ form.comment }}
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-3">
+                <label for="week1">Week 1: </label>
+              </div>
+              <div class="col-sm-3">
+              <div class="form-check form-check-inline">
+                <input type="radio" class="form-check-input" id="materialInline1" value="yes" name="week1">
+                <label class="form-check-label" for="week1">Yes</label>
+              </div>
+              </div>
+              <div class="col-sm-3">
+              <div class="form-check form-check-inline">
+                <input type="radio" class="form-check-input" id="materialInline2" value="no" name="week1">
+                <label class="form-check-label" for="week1">No</label>
+              </div>
+            </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-3">
+                <label for="week2">Week 2: </label>
+              </div>
+              <div class="col-sm-3">
+              <div class="form-check form-check-inline">
+                <input type="radio" class="form-check-input" id="materialInline1" value="yes" name="week2">
+                <label class="form-check-label" for="week2">Yes</label>
+              </div>
+              </div>
+              <div class="col-sm-3">
+              <div class="form-check form-check-inline">
+                <input type="radio" class="form-check-input" id="materialInline2" value="no" name="week2">
+                <label class="form-check-label" for="week2">No</label>
+              </div>
+            </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-3">
+                <label for="week3">Week 3: </label>
+              </div>
+              <div class="col-sm-3">
+              <div class="form-check form-check-inline">
+                <input type="radio" class="form-check-input" id="materialInline1" value="yes" name="week3">
+                <label class="form-check-label" for="week1">Yes</label>
+              </div>
+              </div>
+              <div class="col-sm-3">
+              <div class="form-check form-check-inline">
+                <input type="radio" class="form-check-input" id="materialInline2" value="no" name="week3">
+                <label class="form-check-label" for="week1">No</label>
+              </div>
+            </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-3">
+                <label for="week4">Week 4: </label>
+              </div>
+              <div class="col-sm-3">
+              <div class="form-check form-check-inline">
+                <input type="radio" class="form-check-input" id="materialInline1" value="yes" name="week4">
+                <label class="form-check-label" for="week1">Yes</label>
+              </div>
+              </div>
+              <div class="col-sm-3">
+              <div class="form-check form-check-inline">
+                <input type="radio" class="form-check-input" id="materialInline2" value="no" name="week4">
+                <label class="form-check-label" for="week1">No</label>
+              </div>
+            </div>
+            </div>
+            <input class="btn btn-info" type="submit" value="submit" name="approval_form">
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-sm-6">
+    <div class="p-2 mr-5">
+      <!-- <h2 class="mb-4">Full Calendar</h2> -->
+      <div class="card shadow">
+        <div class="card-body p-4">
+          <div class="container" id="comments">
+            {% if comments %}
+            <h2><b>Comments related to Timesheet:</b></h6>
+              {% for comment in comments %}
+              <strong>{{ comment.comment }}</strong>
+              {% endfor %}
+              {% else %}
+              <h2><b>No comments recived by this employee in current month yet.</b> </h2>
+              <br>
+              <p> Approve the timesheet to see comments...</p>
+              {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- calendar modal -->
+<div id="modal-view-event" class="modal modal-top fade calendar-modal">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h4 class="modal-title"><span class="event-icon"></span><span class="event-title"></span></h4>
+        <div class="event-body"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div class="modal fade" id="modal-book">
+  <div class="modal-dialog">
+    <div class="modal-content"></div>
+  </div>
+</div>
+
+<a class="show-form" data-url="{% url 'HR_tasks:create_event' %}">
+</a>
+
+
+
+{% include 'tasks/eventscaljs.html' %}
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/air-datepicker/2.2.3/js/datepicker.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/air-datepicker/2.2.3/js/i18n/datepicker.en.js"></script>
+
+<script>
+  function validateForm(){
+    var x = document.forms["formApprove"]["week1"].value;
+    if(x=="" || x==null){
+      alert('Week 1 must be selected');
+      return false;
+    }
+  }
+</script>
+
+
+{% endblock %}

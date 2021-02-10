@@ -1,0 +1,945 @@
+{% extends 'base1.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/All-Tickets.css' %}">
+<link rel="stylesheet" href="{% static 'css/calendar.css' %}">
+
+<style>
+
+  .main-container-settings {
+      padding: 0px;
+      width: 100%;
+      margin-right: 0.5rem;
+      margin-bottom: 3rem;
+  }
+  
+  .main-container-settings .box {
+      border: 1px solid #cfd7df;
+      box-shadow: 0 2px 4px 0 rgba(24, 50, 71, .08);
+      border-radius: 4px;
+      background-color: white;
+      margin: 0rem 10rem;
+      padding: 1rem;
+      margin-bottom: 1rem;
+  }
+  
+  @media(max-width: 600px) {
+      .main-container-settings .box {
+          margin: 0rem 3rem;
+      }
+  }
+  
+  .main-container-settings .box .heading {
+      margin-left: 1rem;
+      font-size: 1.2rem;
+      font-weight: bold;
+  }
+  
+  .main-container-settings .box .row {
+      display: flex;
+      justify-content: space-evenly;
+  }
+  
+  .main-container-settings .box .row .setting {
+      display: flex;
+      align-items: center;
+      margin: 0.5rem 1rem;
+      padding: 1rem;
+      border: 1px solid ;
+      border-radius: 4px;
+      cursor: pointer;
+  }
+  
+  .main-container-settings .box .row .setting:hover {
+      border: 1px solid rgba(17, 74, 133, 0.6);
+      background-image: radial-gradient(white, rgba(135, 135, 135, 0.3));
+  }
+  
+  .main-container-settings .box .row .setting .icon {
+      margin-right: 1rem;
+  }
+  
+  .main-container-settings .box .row .setting .icon img {
+      height: 2rem;
+      width: 2rem;
+  }
+  
+  .main-container-settings .box .row .empty {
+      visibility: hidden;
+  }
+  </style>
+
+
+{% if user.is_authenticated %}
+
+
+<div class="container-fluid" style="border-style: none;border-color: rgb(255,255,255); margin-top: 105px;">
+  <div style="padding: 30px;border: 1px solid #f79256 ;">
+      <div class="row">
+          <div class="col-md-6 col-xl-3 mb-4">
+              <div class="card shadow border-left-primary py-2">
+                  <div class="card-body">
+                      <div class="row align-items-center no-gutters">
+                          <div class="col mr-2">
+                              <div class="text-uppercase text-primary font-weight-bold text-xs mb-1">
+                                  <span>Your Issues(Active)</span></div>
+                              <div class="text-dark font-weight-bold h5 mb-0"><span>{{ active_issue_count }}</span>
+                              </div>
+                          </div>
+                          <div class="col-auto"><i class="fas fa-calendar fa-2x text-gray-300"></i>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-6 col-xl-3 mb-4">
+              <div class="card shadow border-left-success py-2">
+                  <div class="card-body">
+                      <div class="row align-items-center no-gutters">
+                          <div class="col mr-2">
+                              <div class="text-uppercase text-success font-weight-bold text-xs mb-1">
+                                  <span>Leaves u took</span></div>
+                              <div class="text-dark font-weight-bold h5 mb-0"><span>{{ leave_curr_month }}</span>
+                              </div>
+                          </div>
+                          <div class="col-auto"><i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-6 col-xl-3 mb-4">
+              <div class="card shadow border-left-info py-2">
+                  <div class="card-body">
+                      <div class="row align-items-center no-gutters">
+                          <div class="col mr-2">
+                              <div class="text-uppercase text-info font-weight-bold text-xs mb-1">
+                                  <span>Tasks Added</span></div>
+                              <div class="row no-gutters align-items-center">
+                                  <div class="col-auto">
+                                      <div class="text-dark font-weight-bold h5 mb-0 mr-3">
+                                          <span>{{percentage_work}}%</span></div>
+                                  </div>
+                                  <div class="col">
+                                      <div class="progress progress-sm">
+                                          <div class="progress-bar bg-info" aria-valuenow="50"
+                                              aria-valuemin="0" aria-valuemax="100"
+                                              style="width: {{ percentage_work }}%;"><span class="sr-only">percentage_work%</span>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="col-auto"><i
+                                  class="fas fa-clipboard-list fa-2x text-gray-300"></i></div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-6 col-xl-3 mb-4">
+              <div class="card shadow border-left-warning py-2">
+                  <div class="card-body">
+                      <div class="row align-items-center no-gutters">
+                          <div class="col mr-2">
+                              <div class="text-uppercase text-warning font-weight-bold text-xs mb-1">
+                                  <span>Days left(Month End)</span></div>
+                              <div class="text-dark font-weight-bold h5 mb-0"><span>{{ days_left_curr_month }}</span></div>
+                          </div>
+                          <div class="col-auto"><i class="fas fa-comments fa-2x text-gray-300"></i>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      
+      <div class="row justify-content-around second-row">
+          <div class="col-lg-6 col-xl-7">
+              <div class="card shadow mb-4" >
+                  <div class="card-header d-flex justify-content-between align-items-center">
+                      <h4 class="text-primary font-weight-bold m-0">Your Working Trend</h4>
+                  </div>
+                  <div class="card-body">
+                      <canvas id="myChart" width="1200" height="700px"></canvas>
+                  </div>
+              </div>
+            <div class="row">
+              <div class="col-sm-7">
+                <div class="card shadow border-left-primary mb-4 p-1">
+                  <div class="card-body" style="overflow-y: scroll; height: 140px;">
+                    <strong class="text-primary text-uppercase" style="color: #0743c58c;">Approved Leaves </strong>
+                    {% if dash_leaves %}
+                      <div class="row">
+                      {% for item in dash_leaves %}
+                        <div class="col-sm-5">
+                          <small>
+                            {{ item.title }}
+                          </small>
+                        </div>
+                        <div class="col-sm-7">
+                          <small>
+                            {{ item.start }}-{{ item.end}}
+                          </small>
+                        </div>
+                      {% endfor %}
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-5 float-right">
+                <div class="card border-left-danger shadow mb-4 p-3">
+                  <strong class="text-danger text-uppercase">Your Active Issues</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+
+          <script>
+                /* ---------------------------------- GRAPH START-----------------------------------------------------*/
+          // Our labels along the x-axis
+          var hours = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23];
+          // For drawing the lines
+          
+          var todaysData = [5,6,7,8,7,6,5,6,7,9,10,9,8,7,9,10];
+          var yesterdaysData = [28,23,26,4,3,2,2,2,1,3,4];
+          
+          
+          
+          var ctx = document.getElementById("myChart").getContext('2d');
+          
+          
+          var gradientFill = ctx.createLinearGradient(0, 0, 300, 0);
+          gradientFill.addColorStop(0, "rgba(51, 204, 255, 0.5)");
+          gradientFill.addColorStop(1, "rgba(255, 255, 255, 0.5)");
+          
+          var myChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: {{ label|safe }},
+            
+            datasets: [
+              
+              { 
+                data: {{ data|safe }},
+                label: "Monthly Working Days",
+                // borderColor: "#3e95cd",
+                borderColor: '#33ccff',
+                lineTension: 0.2,
+                backgroundColor: gradientFill
+              },
+              { 
+                data: {{ data2|safe }},
+                label: "Your Working Graph",
+                lineTension: 0.2,
+                borderColor: "#a6a6a6",
+                fill: false,
+                
+                
+              }
+            ]
+          },
+          options: {
+            legend: {
+              align: 'center',
+              // textDirection: 'rtl',
+              position : 'bottom',
+              labels: {
+                boxWidth : 10
+              }
+            },
+            scales: {
+              xAxes: [{
+                  gridLines: {
+                      color: "rgba(0, 0, 0, 0)",
+                  }
+              }],
+              yAxes: [{
+                  gridLines: {
+                      color: "rgba(0, 0, 0, 0)",
+                      zeroLineColor: '#ffcc33'
+                  }   
+              }]
+            }
+          }
+          });
+          
+          /* ---------------------------------- GRAPH END-----------------------------------------------------*/
+          </script>
+
+          <style>
+            @media(max-width: 768px)
+            {
+                #calendar
+                {
+                    width: 238px;
+                    height: 530px;
+                }
+                .day{
+                  width: 34px;
+                }
+                .header{
+                  width: 238px;
+                }
+                .day-number{
+                  font-size: 8px;
+                  letter-spacing: 0.5px;
+                }
+                .day-name {
+                  font-size: 5px;
+                }
+                .modal.right .modal-dialog{
+                  width: 300px;
+                }
+            }
+          </style>
+
+          <div class="col-lg-6 col-xl-5">
+            <div class="card shadow mb-4">
+                <div class="card-body calendar-div">
+                    <div id="calendar"></div>
+                </div>
+            </div>
+
+            
+            <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
+
+        <script type="text/javascript">
+          // eventdata = "{{ event|safe }}";
+          var eventdata = JSON.parse('{{ event | safe |escapejs }}');
+          var eventdate = JSON.parse('{{ event_date | safe |escapejs }}');
+        </script>
+        <script>
+          !function () {
+
+            var today = moment();
+
+            function Calendar(selector, events) {
+              this.el = document.querySelector(selector);
+              this.events = events;
+              this.current = moment().date(1);
+              this.draw();
+              var current = document.querySelector('.today');
+              if (current) {
+                var self = this;
+                window.setTimeout(function () {
+                  self.openDay(current);
+                }, 500);
+              }
+            }
+
+            Calendar.prototype.draw = function () {
+              //Create Header
+              this.drawHeader();
+
+              //Draw Month
+              this.drawMonth();
+
+              this.drawLegend();
+            }
+
+            Calendar.prototype.drawHeader = function () {
+              var self = this;
+              if (!this.header) {
+                //Create the header elements
+                this.header = createElement('div', 'header');
+                this.header.className = 'header';
+
+                this.title = createElement('h1');
+
+                var right = createElement('div', 'right');
+                right.addEventListener('click', function () { self.nextMonth(); });
+
+                var left = createElement('div', 'left');
+                left.addEventListener('click', function () { self.prevMonth(); });
+
+                //Append the Elements
+                this.header.appendChild(this.title);
+                this.header.appendChild(right);
+                this.header.appendChild(left);
+                this.el.appendChild(this.header);
+              }
+
+              this.title.innerHTML = this.current.format('MMMM YYYY');
+            }
+
+            Calendar.prototype.drawMonth = function () {
+              var self = this;
+              ev = this.events
+              for (i = 0; i < ev.length; i++) {
+                var d = new Date(eventdate[i].replace(/(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3"))
+                ev[i].date = self.current.clone().date(d.getDate()).month(d.getMonth()).year(d.getFullYear());
+              }
+
+              // this.events.forEach(function (ev) {
+              //     ev.date = self.current.clone().date(Math.random() * (29 - 1) + 1).month('Jan').year('2021');
+              //     // var dateString = eventdate; // Oct 23
+
+              //     // var dateObject = new Date(dateString);
+
+              //     // ev.date = dateObject.toString();
+              //     // }
+              // });
+
+
+              if (this.month) {
+                this.oldMonth = this.month;
+                this.oldMonth.className = 'month out ' + (self.next ? 'next' : 'prev');
+                this.oldMonth.addEventListener('webkitAnimationEnd', function () {
+                  self.oldMonth.parentNode.removeChild(self.oldMonth);
+                  self.month = createElement('div', 'month');
+                  self.backFill();
+                  self.currentMonth();
+                  self.fowardFill();
+                  self.el.appendChild(self.month);
+                  window.setTimeout(function () {
+                    self.month.className = 'month in ' + (self.next ? 'next' : 'prev');
+                  }, 16);
+                });
+              } else {
+                this.month = createElement('div', 'month');
+                this.el.appendChild(this.month);
+                this.backFill();
+                this.currentMonth();
+                this.fowardFill();
+                this.month.className = 'month new';
+              }
+            }
+
+            Calendar.prototype.backFill = function () {
+              var clone = this.current.clone();
+              var dayOfWeek = clone.day();
+
+              if (!dayOfWeek) { return; }
+
+              clone.subtract('days', dayOfWeek + 1);
+
+              for (var i = dayOfWeek; i > 0; i--) {
+                this.drawDay(clone.add('days', 1));
+              }
+            }
+
+            Calendar.prototype.fowardFill = function () {
+              var clone = this.current.clone().add('months', 1).subtract('days', 1);
+              var dayOfWeek = clone.day();
+
+              if (dayOfWeek === 6) { return; }
+
+              for (var i = dayOfWeek; i < 6; i++) {
+                this.drawDay(clone.add('days', 1));
+              }
+            }
+
+            Calendar.prototype.currentMonth = function () {
+              var clone = this.current.clone();
+
+              while (clone.month() === this.current.month()) {
+                this.drawDay(clone);
+                clone.add('days', 1);
+              }
+            }
+
+            Calendar.prototype.getWeek = function (day) {
+              if (!this.week || day.day() === 0) {
+                this.week = createElement('div', 'week');
+                this.month.appendChild(this.week);
+              }
+            }
+
+            Calendar.prototype.drawDay = function (day) {
+              var self = this;
+              this.getWeek(day);
+
+              //Outer Day
+              var outer = createElement('div', this.getDayClass(day));
+              outer.addEventListener('click', function () {
+                self.openDay(this);
+              });
+
+              //Day Name
+              var name = createElement('div', 'day-name', day.format('ddd'));
+
+              //Day Number
+              var number = createElement('div', 'day-number', day.format('DD'));
+
+
+              //Events
+              var events = createElement('div', 'day-events');
+              this.drawEvents(day, events);
+
+              outer.appendChild(name);
+              outer.appendChild(number);
+              outer.appendChild(events);
+              this.week.appendChild(outer);
+            }
+
+            Calendar.prototype.drawEvents = function (day, element) {
+              if (day.month() === this.current.month()) {
+                var todaysEvents = this.events.reduce(function (memo, ev) {
+                  if (ev.date.isSame(day, 'day')) {
+                    memo.push(ev);
+                  }
+                  return memo;
+                }, []);
+
+                todaysEvents.forEach(function (ev) {
+                  var evSpan = createElement('span', ev.color);
+                  element.appendChild(evSpan);
+                });
+              }
+            }
+
+            Calendar.prototype.getDayClass = function (day) {
+              classes = ['day'];
+              if (day.month() !== this.current.month()) {
+                classes.push('other');
+              } else if (today.isSame(day, 'day')) {
+                classes.push('today');
+              }
+              return classes.join(' ');
+            }
+
+            Calendar.prototype.openDay = function (el) {
+              var details, arrow;
+              var dayNumber = +el.querySelectorAll('.day-number')[0].innerText || +el.querySelectorAll('.day-number')[0].textContent;
+              var day = this.current.clone().date(dayNumber);
+
+              var currentOpened = document.querySelector('.details');
+
+              //Check to see if there is an open detais box on the current row
+              if (currentOpened && currentOpened.parentNode === el.parentNode) {
+                details = currentOpened;
+                arrow = document.querySelector('.arrow');
+              } else {
+                //Close the open events on differnt week row
+                //currentOpened && currentOpened.parentNode.removeChild(currentOpened);
+                if (currentOpened) {
+                  currentOpened.addEventListener('webkitAnimationEnd', function () {
+                    currentOpened.parentNode.removeChild(currentOpened);
+                  });
+                  currentOpened.addEventListener('oanimationend', function () {
+                    currentOpened.parentNode.removeChild(currentOpened);
+                  });
+                  currentOpened.addEventListener('msAnimationEnd', function () {
+                    currentOpened.parentNode.removeChild(currentOpened);
+                  });
+                  currentOpened.addEventListener('animationend', function () {
+                    currentOpened.parentNode.removeChild(currentOpened);
+                  });
+                  currentOpened.className = 'details out';
+                }
+
+                //Create the Details Container
+                details = createElement('div', 'details in');
+
+                //Create the arrow
+                var arrow = createElement('div', 'arrow');
+
+                //Create the event wrapper
+
+                details.appendChild(arrow);
+                el.parentNode.appendChild(details);
+              }
+
+              var todaysEvents = this.events.reduce(function (memo, ev) {
+                if (ev.date.isSame(day, 'day')) {
+                  memo.push(ev);
+                }
+                return memo;
+              }, []);
+
+              this.renderEvents(todaysEvents, details);
+
+              arrow.style.left = el.offsetLeft - el.parentNode.offsetLeft + 27 + 'px';
+            }
+
+            Calendar.prototype.renderEvents = function (events, ele) {
+              //Remove any events in the current details element
+              var currentWrapper = ele.querySelector('.events');
+              var wrapper = createElement('div', 'events in' + (currentWrapper ? ' new' : ''));
+
+              events.forEach(function (ev) {
+                var div = createElement('div', 'event');
+                var square = createElement('div', 'event-category ' + ev.color);
+                var span = createElement('span', '', ev.eventName);
+
+                div.appendChild(square);
+                div.appendChild(span);
+                wrapper.appendChild(div);
+              });
+
+              if (!events.length) {
+                var div = createElement('div', 'event empty');
+                var span = createElement('span', '', 'No Events');
+
+                div.appendChild(span);
+                wrapper.appendChild(div);
+              }
+
+              if (currentWrapper) {
+                currentWrapper.className = 'events out';
+                currentWrapper.addEventListener('webkitAnimationEnd', function () {
+                  currentWrapper.parentNode.removeChild(currentWrapper);
+                  ele.appendChild(wrapper);
+                });
+                currentWrapper.addEventListener('oanimationend', function () {
+                  currentWrapper.parentNode.removeChild(currentWrapper);
+                  ele.appendChild(wrapper);
+                });
+                currentWrapper.addEventListener('msAnimationEnd', function () {
+                  currentWrapper.parentNode.removeChild(currentWrapper);
+                  ele.appendChild(wrapper);
+                });
+                currentWrapper.addEventListener('animationend', function () {
+                  currentWrapper.parentNode.removeChild(currentWrapper);
+                  ele.appendChild(wrapper);
+                });
+              } else {
+                ele.appendChild(wrapper);
+              }
+            }
+
+            Calendar.prototype.drawLegend = function () {
+              var legend = createElement('div', 'legend');
+              var calendars = this.events.map(function (e) {
+                return e.calendar + '|' + e.color;
+              }).reduce(function (memo, e) {
+                if (memo.indexOf(e) === -1) {
+                  memo.push(e);
+                }
+                return memo;
+              }, []).forEach(function (e) {
+                var parts = e.split('|');
+                var entry = createElement('span', 'entry ' + parts[1], parts[0]);
+                legend.appendChild(entry);
+              });
+              this.el.appendChild(legend);
+            }
+
+            Calendar.prototype.nextMonth = function () {
+              this.current.add('months', 1);
+              this.next = true;
+              this.draw();
+            }
+
+            Calendar.prototype.prevMonth = function () {
+              this.current.subtract('months', 1);
+              this.next = false;
+              this.draw();
+            }
+
+            window.Calendar = Calendar;
+
+            function createElement(tagName, className, innerText) {
+              var ele = document.createElement(tagName);
+              if (className) {
+                ele.className = className;
+              }
+              if (innerText) {
+                ele.innderText = ele.textContent = innerText;
+              }
+              return ele;
+            }
+          }();
+
+          !function () {
+
+            var data = [];
+            for (i = 0; i < eventdata.length; i++) {
+              data.push({ eventName: eventdata[i], calendar: 'Work', color: 'orange' },)
+            }
+
+            function addDate(ev) {
+
+            }
+
+            var calendar = new Calendar('#calendar', data);
+
+          }();
+
+
+        </script>
+
+            <!-- Js for calendar end -->
+        </div>
+      
+      </div>
+
+
+
+
+
+
+
+  <div class="row">
+    <div class="col-lg-6 col-xl-6 mb-4">
+      <div class="card shadow border-left-success py-2">
+          <div class="card-body">
+              <div class="row align-items-center no-gutters">
+                  <div class="col mr-2">
+                      <div class="text-uppercase text-primary font-weight-bold text-xs mb-1">
+                          <span>Events You can Edit</span></div>
+                          <hr>
+                      <div class="text-dark font-weight-bold h5 mb-0">
+                        <div class="todo-subheading" id="book-table">
+                          {% for event in event_by_date %}
+
+                        <a>
+                          <p>{% if event.completed %}
+                            <strike>{{ event }}</strike>
+                            {% else %}
+                            {{ event }}
+                            {% endif %}
+                        </a><button class="btn btn-warning show-form-update float-right"
+                          data-url="{% url 'HR_tasks:update_event' event.id %}">Update</button></p>
+
+                          {% endfor %}
+                        </div>
+                      </div>
+                  </div>
+                  
+              </div>
+          </div>
+      </div>
+    </div>
+    <div class="col-lg-6 col-xl-6 mb-4">
+      <div class="card shadow border-left-info py-2">
+          <div class="card-body">
+              <div class="row align-items-center no-gutters">
+                  <div class="col mr-2">
+                      <div class="text-uppercase text-primary font-weight-bold text-xs mb-1">
+                          <span>Add your Events Here</span></div>
+                          <hr>
+                      <div class="text-dark font-weight-bold h5 mb-0">
+                        <a class="show-form" data-url="{% url 'HR_tasks:create_event' %}"><img class="add-icon" src="{% static 'images/Add.png' %}" />
+                          Add a todo
+                        </a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="container-floating">
+
+  {% if request.user.profile.is_manager %}
+    <div class="nd3 nds" data-placement="left" data-original-title="Reminder" data-toggle="modal" data-target="#myModal4"><img class="reminder" src="//ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/ic_reminders_speeddial_white_24dp.png" /></div>
+  {% endif %}
+    <div class="nd1 nds" data-placement="left" data-original-title="Edoardo@live.it" data-toggle="modal" data-target="#myModal3">
+      <p class="letter">Feed</p>
+    </div>
+  
+    <div id="floating-button" data-placement="left" data-original-title="Create">
+      <p class="plus">+</p>
+      <img class="edit" src="{% static 'images/settings-agent.png' %}" style="width: 30px;" data-toggle="modal" data-target="#myModal2">
+    </div>
+  
+  </div>
+  
+
+  </div>
+</div>
+</div>
+
+<div class="modal fade" id="modal-book">
+  <div class="modal-dialog">
+    <div class="modal-content"></div>
+  </div>
+</div>
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title"><b>Event Not Added Yet...</b></h4>
+        </div>
+        <div class="modal-body" style="background-color: lightcyan;">
+          <p><strong>today's task is yet to be added in event list....add it</strong> </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+	
+  <!-- Modal -->
+	<div class="modal right fade" id="myModal2" tabindex="-1" aria-labelledby="myModalLabel2">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+
+				<div class="modal-header" style="background-color: #124559;">
+					<h4 class="modal-title" id="myModalLabel2" style="color:#ffffff;">Help Center</h4>
+					<span aria-hidden="true" data-dismiss="modal" aria-label="Close" style="color: white;" >&times;</span>
+				</div>
+
+				<div class="modal-body">
+          <strong>Welcome to our Support Channel....feel free to contact us :)</strong>
+
+          <hr>
+          <form>
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" placeholder="Name">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label for="email">e-mail</label>
+                <input type="email" class="form-control" id="email" placeholder="E-mail">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="subject">Subject</label>
+              <input type="text" class="form-control" id="subject" placeholder="Subject">
+            </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea class="form-control" name="message" id="message" cols="30" rows="5" placeholder="Describe your problem here.."></textarea>
+            </div>
+            
+            
+            <button type="submit" class="btn btn-primary">Sign in</button>
+          </form>
+				</div>
+
+			</div><!-- modal-content -->
+		</div><!-- modal-dialog -->
+  </div><!-- modal -->
+  
+  <!-- Modal bottom form approvals -->
+
+  <div class="modal right fade" id="myModal3" tabindex="-1" aria-labelledby="myModalLabel2">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+
+				<div class="modal-header" style="background-color:green;">
+					<h4 class="modal-title" id="myModalLabel2" style="color:#ffffff;">Your Feedback</h4>
+					<span aria-hidden="true" data-dismiss="modal" aria-label="Close" style="color: white;" >&times;</span>
+				</div>
+
+				<div class="modal-body">
+          <strong>Our costomers Feedback is the most important thing for us..Please tell us how we can improve or we are upto ur expectations</strong>
+
+          <hr>
+          <form method="GET">
+            <fieldset class="form-group">
+              <div class="row">
+                <legend class="col-form-label col-sm-4 pt-0">Feedback for</legend>
+                <div class="col-sm-8">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="feedtype" id="gridRadios1" value="dashboard" checked>
+                    <label class="form-check-label" for="gridRadios1">
+                      Dashboard
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="feedtype" id="gridRadios2" value="leaves">
+                    <label class="form-check-label" for="gridRadios2">
+                      Leaves
+                    </label>
+                  </div>
+                  <div class="form-check ">
+                    <input class="form-check-input" type="radio" name="feedtype" id="gridRadios3" value="issue" >
+                    <label class="form-check-label" for="gridRadios3">
+                      issues
+                    </label>
+                  </div>
+                  <div class="form-check ">
+                    <input class="form-check-input" type="radio" name="feedtype" id="gridRadios4" value="Events" >
+                    <label class="form-check-label" for="gridRadios4">
+                      Events
+                    </label>
+                  </div>
+                  <div class="form-check ">
+                    <input class="form-check-input" type="radio" name="feedtype" id="gridRadios5" value="Payroll" >
+                    <label class="form-check-label" for="gridRadios5">
+                      Payroll
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="feedtype" id="gridRadios6" value="Others">
+                    <label class="form-check-label" for="gridRadios6">
+                      others
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+            <div class="form-group">
+              <label for="feedback">Detail your feedback</label>
+              <textarea class="form-control" name="feeddetail" id="feedback" cols="30" rows="5" placeholder="please describe yourself"></textarea>
+            </div>
+
+            
+            <button type="submit" class="btn btn-sm btn-info" name="feed">Submit</button>
+          </form>
+				</div>
+
+			</div><!-- modal-content -->
+		</div><!-- modal-dialog -->
+  </div>
+
+<!-- MOdal for approvals -->
+
+<div class="modal right fade" id="myModal4" tabindex="-1" aria-labelledby="myModalLabel2">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header" style="background-color: #124559;">
+        <h4 class="modal-title" id="myModalLabel2" style="color:#ffffff;">Pending Approvals</h4>
+        <span aria-hidden="true" data-dismiss="modal" aria-label="Close" style="color: white;" >&times;</span>
+      </div>
+
+      <div class="modal-body">
+        <strong>Welcome to our approvals</strong>
+
+        <hr>
+        <div class="container-fluid row main-container-all-tickets">
+        {% include 'All_approvals/approvals_list.html' %}
+      </div>
+      </div>
+
+    </div><!-- modal-content -->
+  </div><!-- modal-dialog -->
+</div><!-- modal -->
+
+.
+
+
+{% endif %}
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+
+<script>
+  {% if event_today %}
+      Cookies.set('added', true, { expires: 1 });
+  {% else %}
+      Cookies.set('added', false, { expires: 1 });
+  {% endif %}
+
+  var Bool = Cookies.get('added');
+  if(Bool=='false'){
+    
+    setTimeout(function(){
+       $('#myModal').modal('show');
+   }, 20000000);
+  }
+
+</script>
+
+
+{% endblock %}

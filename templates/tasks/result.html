@@ -1,0 +1,64 @@
+{% extends 'base1.html' %}
+{% load class_name %}
+{% block title %}
+Search Result
+{% endblock %}
+{% block content %}
+
+<div class="dashboard-wrapper container-fluid row main-container" style="margin-top: -50px;">
+    
+    <div class="orange-box card container-md mt-5 shadow" style="background-color: white; border-radius: 5px; border-color: orange;">
+    <br>
+    <h1>
+    We found {{ count }} results related to your Search:: {{ query }}
+</h1>
+    <hr>
+    <ul>
+        {% for r in results %}
+            {% with r|class_name as klass %}
+                {% if klass == "Event" %}
+                    <h5>Events related to your Search</h5>
+                    <li><a href="{% url 'HR_tasks:my_event' %}">{{ r }}</a></li>
+                {% endif %}
+            {% endwith %}
+            <hr>
+            {% with r|class_name as klass %}
+                {% if klass == "Prob_software" %}
+                <h5>Problems related to your Search</h5>
+                    <li><a href="{% url 'HR_problems:view_prob' r.id %}">{{ r }}</a></li>
+                    <hr>
+                {% endif %}
+            {% endwith %}
+            
+            {% with r|class_name as klass %}
+                {% if klass == "Hardware" %}
+                <h5>Hardware in Inventory related to your Search</h5>
+                    <li><a href="{% url 'HR_inventory:hardware-update' r.id %}">{{ r }}</a></li>
+                    <hr>
+                {% endif %}
+            {% endwith %}
+            
+            {% with r|class_name as klass %}
+                {% if klass == "Software" %}
+                <h5>Softwares in Inventory related to your Search</h5>
+                    <li><a href="{% url 'HR_inventory:software-update' r.id %}">{{ r }}</a></li>
+                    <hr>
+                {% endif %}
+            {% endwith %}
+            
+            {% with r|class_name as klass %}
+                {% if klass == "Vendor" %}
+                <h5>Vendors related to your search</h5>
+                    <li><a href="{% url 'HR_inventory:vendor-update' r.id %}">{{ r }}</a></li>
+                    <hr>
+                {% endif %}
+            {% endwith %}
+            
+        {% endfor %}
+    </ul>
+    
+    
+
+    </div>
+    </div>
+{% endblock %}

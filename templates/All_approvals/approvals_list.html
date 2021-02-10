@@ -1,0 +1,286 @@
+{% load static %}
+
+    <!---------------------------- TICKET LIST START --------------------------------------->
+    <div class="ticket-list col-md">
+        <div class="item row">
+            <div class="col-md">
+                <div class="heading" >
+                    <h4 style="text-align: center; color: lightgreen;"><b>All Pending Approvals List</b></h4>
+                </div>
+            </div>
+        </div>
+        {% if myList %}
+        <div class="item row" style="background-color: lavenderblush;">
+        <div class="left col-md">
+            <div class="heading">
+                <h6><b>List of pending leave requests</b></h6>
+            </div>
+        </div>
+        </div>
+        {% for l in myList %}
+        <div class="item row">
+            <div class="left col-md">
+                <div class="heading">
+                    <a href="#">
+                        {{ l.title }} 
+                    </a>
+                </div>
+                <div class="details row">
+                    <div class="col-md">
+                        <img src="{% static 'images/ticket-fields.png' %}" />
+                        <span class="agent">
+                            {{ l.reason }}
+                        </span>
+                    </div>
+                    <div class="col-md">
+                        <img src="{% static 'images/name.png' %}" />
+                        <span class="agent">
+                            Employee: {{ l.employee }}
+                        </span>
+                    </div>
+                    <div class="col-md">
+                        <img src="{% static 'images/heading-image.png' %}" />
+                        <span class="agent">
+                            Assigned to: {{ l.assign }}
+                        </span>
+                    </div>
+                    <div class="col-md">
+                        <img src="{% static 'images/heading-image.png' %}" />
+                        <span class="agent">
+                            Start Date: {{ l.start }}
+                        </span>
+                    </div>
+                    <div class="col-md">
+                        <img src="{% static 'images/time.png' %}" /> End Date: {{ l.end }} 
+                    </div>
+                </div>
+            </div>
+            
+            <div class="right col-md">
+                <div class="selection-list" data-toggle="tooltip" data-placement="left" title="Assign to">
+                    <div class="icon">
+                        <img src="{% static 'images/group.png' %}" />
+                        <span class="agent">
+                            Assign to:
+                        </span>
+                    </div>
+                    
+                </div>
+                <br>
+                <form action="" method="get">
+                    
+                    <select name="assign_to" class="selectpicker">
+                        {% if profile %}
+                            {% for user in profile %}
+                                <option value="{{ user }}">{{ user }}</option>
+                            {% endfor %}
+                        {% endif %}
+                    </select>
+                    <a href="{% url 'HR_leaves:ProfileCreate' %}" id="add_profile" onclick="return showAddPopup(this);"><img src = "{% static '/images/Add.png' %}" height="30px" alt="add"></a>
+                    <br><br>
+                    <button class="btn btn-sm btn-info" name="approve{{ l.id }}" type="submit">Approve</button>
+                    <button class="btn btn-sm btn-danger float-right" name="disapprove{{ l.id }}" type="submit">Diapprove</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+        
+        {% endif %}
+
+        <!-- Expenses Approvals -->
+
+        {% if expence %}
+        <div class="item row" style="background-color: rgb(243, 214, 204);">
+        <div class="left col-md">
+            <div class="heading">
+                <h6><b>List of pending Expenses requests</b></h6>
+            </div>
+        </div>
+        </div>
+        {% for l in expence %}
+        <div class="item row">
+            <div class="left col-md">
+                <div class="heading">
+                    <a href="#">
+                        {{ l.expense_on }} 
+                    </a>
+                </div>
+                <div class="details row">
+                    <div class="col-md">
+                        <img src="{% static 'images/ticket-fields.png' %}" />
+                        <span class="agent">
+                            details:{{ l.description }}
+                        </span>
+                    </div>
+                    <div class="col-md">
+                        <img src="{% static 'images/name.png' %}" />
+                        <span class="agent">
+                            Employee: {{ l.employee }}
+                        </span>
+                    </div>
+                    <div class="col-md">
+                        <img src="{% static 'images/heading-image.png' %}" />
+                        <span class="agent">
+                            Created to: {{ l.created_on }}
+                        </span>
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="right col-md">
+                <div class="selection-list" data-toggle="tooltip" data-placement="left" title="Assign to">
+                    <div class="icon">
+                    </div>
+                    
+                </div>
+                <br>
+                <form action="" method="get">
+                    <button class="btn btn-sm btn-info" name="approve{{ l.id }}" type="submit">Approve</button>
+                    <button class="btn btn-sm btn-danger float-right" name="disapprove{{ l.id }}" type="submit">Diapprove</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+        
+        {% endif %}
+
+        <!-- TimeSheet Approvals -->
+
+        {% if users %}
+        <div class="item row" style="background-color: palegreen;">
+        <div class="left col-md">
+            <div class="heading">
+                <h6><b>List of Employee's to approve TimeSheet</b></h6>
+            </div>
+        </div>
+        </div>
+        {% for l in users %}
+        <div class="item row">
+            <div class="left col-md">
+                <div class="heading">
+                    <a href="#">
+                        {{ l.username }} 
+                    </a>
+                </div>
+                
+            </div>
+            
+            <div class="right col-md">
+                <div class="selection-list" data-toggle="tooltip" data-placement="left" title="Assign to">
+                    <div class="icon">
+                    </div>
+                    
+                </div>
+                <a class="btn btn-success" href="{% url 'HR_tasks:event_view' l.id %}">Timesheet</a>
+            </div>
+        </div>
+        {% endfor %}
+        
+        {% endif %}
+
+    </div>
+    <!---------------------------- TICKET LIST END --------------------------------------->
+
+
+    <!---------------------------- FILTER LIST START --------------------------------------->
+    <div class="collapse filter-list col-md-3 order-first order-md-last" id="filter-list-id">
+        <form action="" method="get">
+        <div class="for-scrolling">
+            <div class="heading">
+                <div>
+                    FILTERS
+                </div>
+                <div class="pic" onclick=hideFilters()>
+                    +
+                </div>
+            </div>
+            <div class="list">
+
+                <div class="item">
+                    <div class="name">
+                        Type Approval:
+                    </div>
+                    <select name="type_approval" class="selectpicker ml-2 filter-sel" data-live-search="true" multiple title="Any" id="filter-sel-1">
+                        <option value="l">Leaves</option>
+                        <option value="T">TimeSheet</option>
+                        <option value="E">Expence</option>
+                    </select>
+                </div>
+
+                <div class="item">
+                    <div class="name">
+                        TITLE:
+                    </div>
+                    <input type="text" name="a_title" placeholder="subject..">
+                </div>
+
+
+                <div class="item">
+                    <div class="name">
+                        Employee Application
+                    </div>
+                    <select name="employee_name" class="selectpicker ml-2 filter-sel" data-live-search="true" multiple title="Any" id="filter-sel-1">
+                        {% for user in users %}
+                            <option value="{{ user }}">{{ user }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="item">
+                    <div class="name">
+                        Assigned work to
+                    </div>
+                    <select name="assign_to" class="selectpicker ml-2 filter-sel" data-size="5" data-live-search="true" multiple title="Any" id="filter-sel-2">
+                        {% for p in profile %}
+                        <option value="{{ p }}">{{ p }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                
+
+                <div class="item">
+                    <div class="name">
+                        Leave Starts After
+                    </div>
+                    <input type="date" name="leave_after">
+                </div>
+
+                <div class="item">
+                    <div class="name">
+                        Leave Ends before
+                    </div>
+                    <input type="date" name="leave_before">
+                </div>
+
+
+
+                <div class="item">
+                    <div class="name">
+                        Created After
+                    </div>
+                    <input type="date" name="created_after">
+                </div>
+
+                <div class="item">
+                    <div class="name">
+                        Created before
+                    </div>
+                    <input type="date" name="created_before">
+                </div>
+
+                
+
+            </div>
+            <!--list end-->
+        </div>
+        <button class="apply-button-div btn-block apply-button-div-all-tickets" type="submit" name="filter">
+            <div class="apply-button">
+                Apply
+            </div>
+        </button>
+        </form>
+    </div>
+    <!--filter list end-->
+</div>

@@ -1,0 +1,37 @@
+body {
+  overflow: auto;
+  font-family: 'HelveticaNeue-UltraLight', 'Helvetica Neue UltraLight', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-weight: 100;
+  color: rgb(0, 0, 0);
+  margin: 0;
+  padding: 0;
+  /* background: #ffffff; */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+ }
+ 
+ table,th,td{
+   text-align: center;
+   
+   padding-top: 2px;
+ }
+
+ table {
+  
+  align-content: center;
+  
+}
+ 
+ td{
+   
+   padding: 5%;
+   align-items: center;
+ }
+
+ tr{
+   border-color: 3px rgb(3, 3, 3);
+ }

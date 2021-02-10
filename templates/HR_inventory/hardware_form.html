@@ -1,0 +1,127 @@
+{% extends "base1.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/forms/formStyle.css' %}">
+	<div  class="container-fluid row main-container">
+		<div class="form-box">
+			<div class="heading">
+			</div>
+			<hr/>
+			<form class="form" method="POST">
+				{% csrf_token %}
+				<div class="columns row">
+					<div class="column col-md">
+						<div class="form-group">
+							<label for="{{ form.title.id_for_label }}">{{ form.name.label }}</label>
+							{{ form.name|add_class:'form-control' }}
+						</div>
+						
+						<div class="form-group">
+							<label for="{{ form.reason.id_for_label }}">{{ form.quantity.label }}</label>
+							{{ form.quantity|add_class:'form-control' }}
+						</div>
+
+						<div class="form-group">
+							<label for="{{ form.reason.id_for_label }}">{{ form.item_type.label }}</label>
+							{{ form.item_type|add_class:'form-control' }}
+						</div>
+						<div class="form-group">
+							<label for="{{ form.reason.id_for_label }}">{{ form.description.label }}</label>
+							{{ form.description|add_class:'form-control' }}
+						</div>
+						<div class="form-group">
+							<label for="{{ form.reason.id_for_label }}">{{ form.vendor.label }}</label>
+							<div class="row">
+							<div class="col-sm-9">{{ form.vendor|add_class:'form-control' }}</div>
+							<div class="col-sm-3 float-right">
+								<a href="{% url 'HR_inventory:VendorCreate' %}" id="add_profile" onclick="return showAddPopup(this);"><img src = "{% static '/images/Add.png' %}" height="35px" alt="add"></a>
+
+							</div> </div>
+						</div>
+					
+					</div>
+					<div class="column col-md">
+	
+						<div class="form-group">
+							<label for="{{ form.start.id_for_label }}">{{ form.warranty.label }}</label>
+							{{ form.warranty|add_class:'form-control' }}
+						</div>
+						<div class="form-group">
+							<label for="{{ form.end.id_for_label }}">{{ form.mfg_date.label }}</label>
+							{{ form.mfg_date|add_class:'form-control' }}
+						</div>
+						<div class="form-group" id="hardwareType" >
+							<label for="{{ form.assign.id_for_label }}">{{ form.condition.label }}</label>
+							{{ form.condition|add_class:'form-control' }}
+						</div>
+						<div class="form-group" id="hardwareType" >
+							<label for="{{ form.assign.id_for_label }}">{{ form.users.label }}</label>
+							<div class="row">
+								<div class="col-sm-9">
+									{{ form.users|add_class:'form-control' }}
+								</div>
+								<div class="col-sm-3">
+									<a href="{% url 'HR_leaves:ProfileCreate' %}" id="add_profile" onclick="return showAddPopup(this);"><img src = "{% static '/images/Add.png' %}" height="30px" alt="add"></a>
+
+								</div>
+							</div>
+						</div>
+						<p>Issue Solved</p>
+						<select class="selectpicker" data-live-search="true" name="issue" title="Select issue">
+						{% for problem in problems %}
+						<option value="{{problem.pk}}">#{{problem.pk}} {{problem.title}}</option>
+						{% endfor %}
+					</select>
+					</div>
+				</div>
+				<div class="form-group">
+					{% if 'create' in request.path %}
+					<button class="btn btn-outline-info" type="submit">Create</button>
+					{% else %}
+					<button class="btn btn-outline-info" type="submit">Update</button>
+					{% endif %}
+				</div>
+			</form>
+		</div>
+	</div>
+	
+	<script>
+		$('#dbType').on('change',function(){
+			if( $(this).val()==="software"){
+			$("#otherType").show()
+			}
+			else{
+			$("#otherType").hide()
+			}
+			if( $(this).val()==="hardware"){
+			$("#hardwareType").show()
+			}
+			else{
+			$("#hardwareType").hide()
+			}
+		});
+	</script>
+
+<script type="text/javascript">
+    function showEditPopup(url) {
+        var win = window.open(url, "Edit", 
+            'height=500,width=800,resizable=yes,scrollbars=yes');
+        return false;
+    }
+    function showAddPopup(triggeringLink) {
+        var name = triggeringLink.id.replace(/^add_/, '');
+        href = triggeringLink.href;
+        var win = window.open(href, name, 'height=500,width=600,resizable=yes,scrollbars=yes');
+        win.focus();
+        return false;
+    }
+    function closePopup(win, newID, newRepr, id) {
+        $(id).append('<option value=' + newID + ' selected >' + newRepr + '</option>')
+        win.close();
+        location.reload();
+    }
+    
+</script>
+{% endblock %}

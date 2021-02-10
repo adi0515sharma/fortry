@@ -1,0 +1,192 @@
+{% extends 'base1.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/All-Tickets.css' %}">
+{% endblock %}
+{% block content %}
+
+<style>
+
+    .main-container-settings {
+        padding: 0px;
+        width: 100%;
+        margin-right: 0.5rem;
+        margin-bottom: 3rem;
+    }
+    
+    .main-container-settings .box {
+        border: 1px solid #cfd7df;
+        box-shadow: 0 2px 4px 0 rgba(24, 50, 71, .08);
+        border-radius: 4px;
+        background-color: white;
+        margin: 0rem 10rem;
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+    
+    @media(max-width: 600px) {
+        .main-container-settings .box {
+            margin: 0rem 3rem;
+        }
+    }
+    
+    .main-container-settings .box .heading {
+        margin-left: 1rem;
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+    
+    .main-container-settings .box .row {
+        display: flex;
+        justify-content: space-evenly;
+    }
+    
+    .main-container-settings .box .row .setting {
+        display: flex;
+        align-items: center;
+        margin: 0.5rem 1rem;
+        padding: 1rem;
+        border: 1px solid ;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    
+    .main-container-settings .box .row .setting:hover {
+        border: 1px solid rgba(17, 74, 133, 0.6);
+        background-image: radial-gradient(white, rgba(135, 135, 135, 0.3));
+    }
+    
+    .main-container-settings .box .row .setting .icon {
+        margin-right: 1rem;
+    }
+    
+    .main-container-settings .box .row .setting .icon img {
+        height: 2rem;
+        width: 2rem;
+    }
+    
+    .main-container-settings .box .row .empty {
+        visibility: hidden;
+    }
+    </style>
+
+<form action="" method="get">
+<nav class="navbar navbar-expand-lg navbar-light bg-light second-navbar" style="margin-left: 0px; margin-top: -40px;">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent2" aria-controls="navbarSupportedContent2" aria-expanded="false" aria-label="Toggle navigation2">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse bg-light" id="navbarSupportedContent2">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item form-inline my-2 my-lg-0">
+                <input type="checkbox" class="select-all-checkbox" />
+            </li>
+            <li class="nav-item active form-inline my-2 my-lg-0 selection-list">
+                <label for="sel1" class="nav-link">Sort by: </label>
+                <select name="ordering_by" id="sort-item" class="selectpicker" data-width="150px" data-style="btn-white" onchange="this.form.submit()">  
+                    <option value="date_created">Date created</option>
+                    <option value="date_start">Leave Start Date</option>
+                    
+                </select>
+            </li>
+            <li class="nav-item active form-inline my-2 my-lg-0 selection-list">
+                <label for="sel2" class="nav-link">Order: </label>
+                <select name="asddes" id="sel2" class="selectpicker" data-width="150px" data-style="btn-white" onchange="this.form.submit()">
+                    <option value="ascending">Ascending</option>
+                    <option value="descending">Descending</option>
+                </select>
+            </li>
+        </ul>
+        <ul class=" navbar-nav my-2 my-lg-0">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">
+                    <span class="make-box">
+                        Export
+                    </span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <span class="nav-link">
+                    1-3 of 3
+                </span>
+            </li>
+            <li class="nav-item active move-buttons nav-link">
+                <a class="" href="#">
+                    <span class="make-box" data-toggle="tooltip" data-placement="bottom" title="Previous Page">
+                        <img src="{% static 'images/left-move.png' %}" />
+                    </span>
+                </a>
+                <a class="" href="#">
+                    <span class="make-box" data-toggle="tooltip" data-placement="bottom" title="Next Page">
+                        <img class="flip-image" src="{% static 'images/left-move.png' %}" />
+                    </span>
+                </a>
+            </li>
+            <li class="nav-item show-filters active nav-link" onclick=showFilters()>
+                <div data-toggle="collapse" data-target="#filter-list-id" aria-controls="filter-list-id" aria-expanded="false" aria-label="Toggle Filters">
+                    <span class="make-box " data-toggle="tooltip" data-placement="bottom" title="Show Filters">
+                        <img src="{% static 'images/show.png' %}" />
+                    </span>
+                </div>
+            </li>
+            <li class="nav-item hide-filters nav-link" onclick=hideFilters()>
+                <div data-toggle="collapse" data-target="#filter-list-id" aria-controls="filter-list-id" aria-expanded="false" aria-label="Toggle Filters">
+
+                    <span class="make-box " data-toggle="tooltip" data-placement="bottom" title="Hide Filters" data-toggle="collapse" data-target="#filter-list-id" aria-controls="filter-list-id" aria-expanded="false" aria-label="Toggle Filters">
+                        <img class="flip-image" src="{% static 'images/show.png' %}" />
+                    </span>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+</form>
+<div class="container-fluid row main-container-all-tickets" style="margin-top: -10px; margin-left: 0px;">
+    {% include 'All_approvals/approvals_list.html' %}
+</div>
+<!-- Bootstrap -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+<!-- For styling select tags -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script> -->
+
+<!--For tooltip -->
+<script>
+    $(document).ready(function() {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+
+
+<!--Js-->
+<script src="{% static 'js/All-Tickets.js' %}"></script>
+
+<!--Js for navbar and sidebar -->
+<script src="{% static 'js/Main.js' %}"></script>
+
+
+<script type="text/javascript">
+    
+    function showAddPopup(triggeringLink) {
+        var name = triggeringLink.id.replace(/^add_/, '');
+        href = triggeringLink.href;
+        var win = window.open(href, name, 'height=500,width=600,resizable=yes,scrollbars=yes');
+        win.focus();
+        return false;
+    }
+    function closePopup(win, newID, newRepr, id) {
+        $(id).append('<option value=' + newID + ' selected >' + newRepr + '</option>')
+        win.close();
+        location.reload();
+    }
+    
+</script>
+
+
+{% endblock %}
+
+
+

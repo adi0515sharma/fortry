@@ -1,0 +1,202 @@
+.main-container-single-ticket {
+    display: flex;
+    margin-top: 6rem;
+    margin-left: 65px;
+    padding: 0px;
+    width: 100%;
+    margin-right: 0.5rem;
+}
+
+.main-container-single-ticket .white-container {
+    border: 1px #cfd7df solid;
+    box-shadow: 0 2px 4px 0 rgba(24, 50, 71, .08);
+    border-radius: 4px;
+    background-color: white;
+    padding: 10px;
+}
+
+.main-container-single-ticket .white-container .heading-row {
+    display: flex;
+    margin-left: 1rem;
+    margin-top: 1rem;
+    margin-right: 1rem;
+}
+
+.main-container-single-ticket .white-container .heading-row .heading {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.main-container-single-ticket .white-container .heading-row .icon img {
+    height: 1rem;
+    width: 1rem;
+    margin-right: 1rem;
+}
+
+.main-container-single-ticket .white-container .created-by {
+    margin: 1rem;
+}
+
+.main-container-single-ticket .white-container .created-by .name {
+    font-weight: bold;
+}
+
+.main-container-single-ticket .inbox-message {
+    border-radius: 4px;
+    border: 2px solid rgb(187, 220, 254);
+    background-image: linear-gradient(rgb(229, 242, 253), rgb(229, 242, 253));
+    padding: 1rem;
+}
+
+.main-container-single-ticket .inbox-message .who {
+    display: flex;
+}
+
+.main-container-single-ticket .inbox-message .who .pic img {
+    height: 1.5rem;
+    width: 1.5rem;
+    margin-right: 1rem;
+}
+
+.main-container-single-ticket .inbox-message .who .right .name {
+    font-size: 0.9rem;
+}
+
+.main-container-single-ticket .inbox-message .who .right .name span {
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.main-container-single-ticket .inbox-message .who .right .time {
+    font-style: oblique;
+    font-size: 0.9rem;
+}
+
+.main-container-single-ticket .inbox-message hr {
+    background-color: rgb(187, 220, 254)
+}
+
+.main-container-single-ticket .text-editor {
+    border: 2px solid #cfd7df;
+    border-radius: 4px;
+    margin-top: 1rem;
+}
+
+.main-container-single-ticket #editor-single-ticket {
+    background-color: white;
+    min-height: 200px;
+}
+
+.main-container-single-ticket .accordion .card .card-header .accordion-toggle {
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.main-container-single-ticket .accordion .card .card-header .accordion-toggle h5 {
+    font-size: 1rem;
+    font-weight: 400;
+    font-family: 'Ubuntu Condensed', sans-serif;
+}
+
+.main-container-single-ticket .accordion .card .card-header .accordion-toggle .icon img {
+    height: 0.7rem;
+    width: 0.7rem;
+}
+
+.main-container-single-ticket .accordion .card .card-header .accordion-toggle.collapsed .icon {
+    color: blue;
+    font-size: 1rem;
+    transform: rotate(180deg);
+}
+
+.main-container-single-ticket .accordion .card #collapseOne1 .who {
+    display: flex;
+}
+
+.main-container-single-ticket .accordion .card #collapseOne1 .who .pic img {
+    height: 1.5rem;
+    width: 1.5rem;
+    margin-right: 1rem;
+}
+
+.main-container-single-ticket .accordion .card #collapseOne1 .who .right {
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.main-container-single-ticket .accordion .card #collapseOne1 .email {
+    margin-top: 1rem;
+}
+
+.main-container-single-ticket .accordion .card #collapseOne1 .email .heading {
+    color: gray;
+    font-size: 0.9rem;
+}
+
+.main-container-single-ticket .accordion .card #collapseOne1 .email .content {
+    margin-left: 0.5rem;
+}
+
+.main-container-single-ticket .accordion .card #collapseOne1 .timeline-container {
+    margin-top: 1rem;
+}
+
+.main-container-single-ticket .accordion .card #collapseOne1 .timeline-container .timeline-container-heading {
+    color: gray;
+    font-size: 0.9rem;
+}
+
+.main-container-single-ticket .accordion .card #collapseOne1 .timeline-container .timeline {
+    position: relative;
+    z-index: 1;
+    margin-left: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.main-container-single-ticket .accordion .card #collapseOne1 .timeline-container .timeline:before {
+    top: 0;
+    bottom: 0;
+    position: absolute;
+    content: " ";
+    width: 2px;
+    background-color: rgba(166, 166, 166, 0.6);
+    margin-left: -1.5px;
+    z-index: 1;
+}
+
+.main-container-single-ticket .accordion .card #collapseOne1 .timeline-container .timeline .item {
+    display: flex;
+    margin-top: 1rem
+}
+
+.main-container-single-ticket .accordion .card #collapseOne1 .timeline-container .timeline .item .icon {
+    margin-left: -10px;
+    z-index: 3;
+    align-self: flex-start;
+    background-color: white;
+    padding: 0.5rem 0rem;
+}
+
+.main-container-single-ticket .accordion .card #collapseOne1 .timeline-container .timeline .item .icon img {
+    height: 20px;
+    width: 20px;
+}
+
+.main-container-single-ticket .accordion .card #collapseOne1 .timeline-container .timeline .item .content {
+    margin-left: 1rem;
+    margin-top: 0.5rem;
+}
+
+.main-container-single-ticket .accordion .card #collapseOne1 .timeline-container .timeline .item .content .heading {
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.main-container-single-ticket .accordion .card #collapseOne1 .timeline-container .timeline .item .content .time,
+.main-container-single-ticket .accordion .card #collapseOne1 .timeline-container .timeline .item .content .status {
+    color: gray;
+    margin-left: 0.5rem;
+    font-size: 0.9rem;
+}

@@ -1,0 +1,38 @@
+{% extends 'base1.html' %}
+
+{% block content %}
+
+
+
+    <div class="container">
+        <div class="card">
+            <br>
+            <h1>List of my expences.....</h1>
+            <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Expence on</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Requested on</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for expence in expence %}
+                  
+                  <tr data-toggle="tooltip" title="{{ expence.description }}">
+                    <th scope="row"><i class="fa fa-circle"></i></th>
+                    <td>{{ expence.expense_on }}</td>
+                    <td>{{ expence.amount }}</td>
+                    <td>{{ expence.created_on }}</td>
+                   </tr>
+                </div>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+{% endblock %}

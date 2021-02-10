@@ -1,0 +1,88 @@
+.main-container
+{    
+    /* height: 100vh; */
+    /* font-size: 4rem; */
+    margin-top: 6rem;
+    /* border: 2px solid red; */
+    margin-left: 65px;
+    padding: 0px;
+    width: 100%;
+    margin-right: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* z-index: -1; */
+}
+
+.main-container .form-box
+{
+    background-color: white;
+    padding: 1rem;
+    border: 1px solid #cfd7df ;
+    box-shadow: 0 2px 4px 0 rgba(24,50,71,.08);
+    border-radius: 4px;
+
+}
+
+.main-container .form-box .heading
+{
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-left: 1rem;
+}
+
+.main-container .form-box .form
+{
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-evenly; */
+    align-items: center;
+}
+
+.main-container .form-box .form .columns
+{
+    display: flex;
+    align-items: center;
+}
+
+.main-container .form-box .form .column
+{
+    margin-left: 1rem;
+    margin-right: 1rem;
+    /* width: 500px; */
+}
+
+.main-container .form-box .form .bootstrap-select .btn {
+    background-color: white;
+    border: 1px solid #ced4da;
+    color: #495057;
+    /* font-weight: normal; */
+    /* font-weight: 200; */
+    /* padding: 12px 12px; */
+    /* font-size: 16px; */
+    /* margin-bottom: 10px; */
+    /* -webkit-appearance: none; */
+    /* -moz-appearance: none; */
+    /* appearance: none; */
+}
+
+.main-container .form-box .form .column textarea
+{
+    resize: none;
+}
+
+.main-container .form-box .form .submit-button button
+{
+    /* border: 2px solid red; */
+    border: 1px solid #114a85;
+    color: #114a85;
+    padding: 0.4rem 1.1rem;
+    cursor: pointer;
+    border-radius: 4px;
+    margin: 0.5rem;
+}
+
+.main-container .form-box .form .submit-button button:hover
+{
+    background-image: radial-gradient(white , rgba(135,135,135,0.4));
+}

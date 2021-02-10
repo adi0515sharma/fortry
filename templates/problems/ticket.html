@@ -1,0 +1,699 @@
+{% extends 'base1.html' %}
+{% block content %}
+    <!---------------------------- NAVBAR START ----------------------------------------->
+    <nav class="navbar navbar-expand-lg  navbar-light fixed-top main-navbar" style="background-color: white;" >
+      <div class="main-icon">
+        <img src="../Images/logo.jpeg" />
+      </div>
+      <div class="navbar-brand font-weight-bold page-name">All Tickets</div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active" >
+              <a class="nav-link" href="#" >
+                <span  class="make-box" data-toggle="tooltip" data-placement="bottom" title="Learn how to get the most value for your buisness">
+                  Get Started
+                </span>
+              </a>
+            </li>
+            <li class="nav-item dropdown active ">
+                <a class="nav-link dropdown-toggle make-box-new" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  New
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="#">New ticket</a>
+                  <a class="dropdown-item" href="#">New email</a>
+                  <a class="dropdown-item" href="#">New contact</a>
+                  <a class="dropdown-item" href="#">New company</a>
+                </div>
+            </li>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0 search-button" type="submit" data-toggle="tooltip" data-placement="bottom" title="Search">
+                  <img src="../Images/Navbar/Search.png"/>
+                </button>
+            </form>
+            <li class="nav-item">
+                <a class="nav-link" href="#" onclick=notificationList()>
+                  <img src="../Images/Navbar/Notification.png" data-toggle="tooltip" data-placement="bottom" title="Notifications"/>
+                </a>
+                <div class="notification-list">
+                  <div class="first-row">
+                    <div>Notifications</div>
+                    <div class="settings">Settings</div>
+                  </div>
+                  <div class="list">
+                    <div class="item">
+                      <div class="text">
+                        Welcome !
+                      </div>
+                      <div class="actions">
+                        <div class="action-button"  >
+                          <img src="../Images/Navbar/View.png" data-toggle="tooltip" data-placement="bottom" title="View"/>
+                        </div>
+                        <div class="action-button">
+                          <img src="../Images/Navbar/Delete.png" data-toggle="tooltip" data-placement="bottom" title="Delete"/>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </li>
+        </div>
+    </nav>
+    <!---------------------------- NAVBAR END ----------------------------------------->
+
+    <!----------------------------- TICKETS NAVBAR START -------------------------------------->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light second-navbar fixed-top">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent2" aria-controls="navbarSupportedContent2" aria-expanded="false" aria-label="Toggle navigation2">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse bg-light" id="navbarSupportedContent2">
+            <ul class="navbar-nav mr-auto">
+                <!-- <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+                </li> -->
+                <li class="nav-item form-inline my-2 my-lg-0">
+                  <input type="checkbox" class="select-all-checkbox"/>
+                </li>
+                <li class="nav-item active form-inline my-2 my-lg-0 selection-list">
+                <!-- <li class="nav-item active dropdown my-2 my-lg-0 selection-list" > -->
+                    <label for="sel1" class="nav-link">Sort by: </label>
+                    <select id="sel1" class="selectpicker" data-width="150px" data-style="btn-white">
+                        <option>Date created</option>
+                        <option>Due by time</option>
+                        <option>Last modified</option>
+                        <option>Priority</option>
+                        <option>Status</option>
+                    </select>
+                </li>
+                <li class="nav-item active form-inline my-2 my-lg-0 selection-list">
+                    <label for="sel2" class="nav-link">Order: </label>
+                    <select id="sel2" class="selectpicker" data-width="150px" data-style="btn-white">
+                        <option>Ascending</option>
+                        <option>Descending</option>
+                    </select>
+                </li>
+            </ul>
+            <ul class=" navbar-nav my-2 my-lg-0">
+                <li class="nav-item active" >
+                    <a class="nav-link" href="#" >
+                      <span  class="make-box">
+                        Export
+                      </span>
+                    </a>
+                </li>
+                <li class="nav-item active">
+                    <span class="nav-link">
+                        1-3 of 3
+                    </span>
+                </li>
+                <li class="nav-item active move-buttons nav-link">
+                    <a class="" href="#" >
+                        <span  class="make-box" data-toggle="tooltip" data-placement="bottom" title="Previous Page">
+                            <img src="images/left-move.png"/>
+                        </span>
+                    </a>
+                    <a class="" href="#" >
+                        <span  class="make-box" data-toggle="tooltip" data-placement="bottom" title="Next Page">
+                            <img  class="flip-image" src="images/left-move.png"/>
+                        </span>
+                    </a>
+                </li>
+                <!-- <li class="nav-item active nav-link">
+                <button class="navbar-togglers" type="button" data-toggle="collapse" data-target="#filter-list-id" aria-controls="filter-list-id" aria-expanded="false" aria-label="Toggle navigation">
+                  Toogle
+                </button>
+                </li> -->
+                <li class="nav-item show-filters active nav-link" onclick=showFilters()>
+                  <div data-toggle="collapse" data-target="#filter-list-id" aria-controls="filter-list-id" aria-expanded="false" aria-label="Toggle Filters">
+                    <span class="make-box " data-toggle="tooltip" data-placement="bottom" title="Show Filters" >
+                        <img src="images/show.png"/>
+                    </span>
+                  </div>
+                </li>
+                <li class="nav-item hide-filters nav-link" onclick=hideFilters()>
+                  <div data-toggle="collapse" data-target="#filter-list-id" aria-controls="filter-list-id" aria-expanded="false" aria-label="Toggle Filters">
+
+                    <span class="make-box " data-toggle="tooltip" data-placement="bottom" title="Hide Filters" data-toggle="collapse" data-target="#filter-list-id" aria-controls="filter-list-id" aria-expanded="false" aria-label="Toggle Filters">
+                        <img class="flip-image" src="images/show.png"/>
+                    </span>
+                  </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!----------------------------- TICKETS NAVBAR END -------------------------------------->
+
+
+    <div class="wrapper"> 
+        <!---------------------------- SIDEBAR START ----------------------------------------->
+       
+        <nav id="sidebar">
+           
+    
+            <ul class="list-unstyled components">
+                <li class="mt-4"  data-toggle="tooltip" data-placement="right" title="Dashboard">
+                  <a href="../Dashboard/Dashboard.html" class="m-2 mt-4 p-2">
+                    <img src="../Images/Sidebar/Dashboard.png"/>
+                  </a>
+                </li>
+                <li class="mt-5" data-toggle="tooltip" data-placement="right" title="Tickets">
+                  <a href="#" class="m-2 mt-4 p-2">
+                    <img src="../Images/Sidebar/Ticket.png"/>
+                  </a>
+                </li>
+                <li class="mt-5 li-with-side-list" onmouseover=showContactList() onmouseout=hideContactList()>
+                  <div class="contact-list">
+                    <div class="list-item">
+                      <a href="#">Contacts</a>
+                    </div>
+                    <div class="list-item">
+                      <a href="#">Companies</a>
+                    </div>
+                  </div>
+
+                  <a href="#" class="m-2 mt-4 p-2"  >
+                    <img src="../Images/Sidebar/Contacts.png"/>
+                  </a>
+                  
+                </li>
+                <li class="mt-5" data-toggle="tooltip" data-placement="right" title="Solutions">
+                  <a href="#" class="m-2 mt-4 p-2">
+                    <img src="../Images/Sidebar/Solutions.png"/>
+                  </a>
+                </li>
+                <li class="mt-5" onmouseover=showReportList() onmouseout=hideReportList()>
+                  <div class="report-list">
+                    <div class="list-item">
+                      <a href="#">Reports</a>
+                    </div>
+                    <div class="list-item">
+                      <a href="#">Analytics</a>
+                    </div>
+                  </div>
+
+                  <a href="#" class="m-2 mt-4 p-2">
+                    <img src="../Images/Sidebar/Report.png"/>
+                  </a>
+                </li>
+                <li class="mt-5" data-toggle="tooltip" data-placement="right" title="Admin">
+                  <a href="../Settings/Settings.html" class="m-2 mt-4 p-2">
+                    <img src="../Images/Sidebar/Admin.png"/>
+                  </a>
+                </li>
+                
+                
+            </ul> 
+        </nav>
+      
+        <!---------------------------- SIDEBAR END ----------------------------------------->
+        
+        <div  class="container-fluid row main-container">
+            <!---------------------------- TICKET LIST START --------------------------------------->
+            <div class="ticket-list col-md">
+              <div class="item row">
+                  <div>
+                    <input type="checkbox"class="checkbox-of-item"/>
+                  </div>
+                  <div class="left col-md">
+                    <div class="heading">
+                      <a href="../Single-Ticket/Single-Ticket.html" class="pop" data-container="body" data-toggle="popover" data-placement="bottom" 
+                      data-content="
+                        <div class='heading-popover'>
+                            <div class='top'>
+                              <div class='pic'>
+                                <img src='images/agent.png'/>
+                              </div>
+                              <div class='details'>
+                                <div class='who-replied'>
+                                  <span class='name'>Customer Service</span>
+                                  replied
+                                </div>
+                                <div class='time'>
+                                  6 hours ago
+                                </div>
+                              </div>
+                            </div>
+                            <div class='content'>
+                              Hi Matt, Thanks for writing in! I’m sorry to say those vintage lamps are currently out of stock. I checked with our supplier though and they think it should be available by the end of next month. But if you’d rather not wait that long, ...
+                            <div>
+                        </div>
+                      ">
+                        Vintage Table Lamp
+                      </a>
+                      
+                    </div>
+                    <div class="details row">
+                      <div class="col-md">
+                        <img src="images/name.png"/>
+                        <span class="pop agent" data-container="body" data-toggle="popover" data-placement="bottom" 
+                          data-content="">
+                            <div class='name-popover'>
+                              <div class='top'>
+                                <div class='pic'>
+                                  <img src='images/agent.png'/>
+                                </div>
+                                <div class='details'>
+                                  <div class='name'>
+                                    Matt Rogers
+                                  </div>
+                                  <div class='link'>
+                                    <a href='#'>View tickets</a>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class='bottom'>
+                                <div class='pic'>
+                                  <img src='images/email.png'/>
+                                </div>
+                                <div class='email'>
+                                    matt.rogers@gmail.com
+                                </div>
+                              </div>
+                            </div>
+                          
+                          Matt Rogers
+                        </span>
+                      </div>
+                      <div class="col-md" >
+                        <img src="images/calendar.png"/>
+                        Responded a minute ago
+                      </div>
+                      <div class="col-md">
+                        <img src="images/time.png"/>
+                        Due in 5 days
+                      </div>
+                    </div>
+                  </div>
+                  <div class="right col-md">
+                    <div class="selection-list" data-toggle="tooltip" data-placement="left" title="Priority">
+                      <div class="icon">
+                        <img src="images/priority.png"/>
+                      </div>
+                      <select class="selectpicker" data-width="150px"data-style="btn-white">
+                          <option>Low</option>
+                          <option>Medium</option>
+                          <option>High</option>
+                          <option>Urgent</option>
+                      </select>
+                    </div>
+
+                    <div class="selection-list" data-toggle="tooltip" data-placement="left" title="Group">
+                      <div class="icon">
+                        <img src="images/group.png"/>
+                      </div>
+                      <select class="selectpicker" data-width="150px" data-style="btn-white">
+                          <option>Unassigned</option>
+                          <option>Group1</option>
+                          <option>Group2</option>
+                      </select>
+                    </div>
+
+                    <div class="selection-list" data-toggle="tooltip" data-placement="left" title="Agent">
+                      <div class="icon">
+                        <img src="images/agent.png"/>
+                      </div>
+                      <select class="selectpicker" data-width="150px" data-style="btn-white">
+                          <option>Unassigned</option>
+                          <option>Agent1</option>
+                          <option>Agent2</option>
+                      </select>
+                    </div>
+
+                    <div class="selection-list" data-toggle="tooltip" data-placement="left" title="Status">
+                      <div class="icon">
+                        <img src="images/status.png"/>
+                      </div>
+                      <select class="selectpicker" data-width="150px" data-style="btn-white">                          <option>Open</option>
+                          <option>Pending</option>
+                          <option>Resolved</option>
+                          <option>Closed</option>
+                          <option>Waiting on customer</option>
+                          <option>Waiting on third party</option>
+                      </select>
+                    </div>
+
+
+                  </div>
+              </div>
+
+              <div class="item row">
+                <div>
+                  <input type="checkbox"class="checkbox-of-item"/>
+                </div>
+                <div class="left col-md">
+                  <div class="heading">
+                    <a href="../Single-Ticket/Single-Ticket.html" class="pop" data-container="body" data-toggle="popover" data-placement="bottom" 
+                    data-content="
+                      <div class='heading-popover'>
+                          <div class='top'>
+                            <div class='pic'>
+                              <img src='images/agent.png'/>
+                            </div>
+                            <div class='details'>
+                              <div class='who-replied'>
+                                <span class='name'>Customer Service</span>
+                                replied
+                              </div>
+                              <div class='time'>
+                                6 hours ago
+                              </div>
+                            </div>
+                          </div>
+                          <div class='content'>
+                            Hi Matt, Thanks for writing in! I’m sorry to say those vintage lamps are currently out of stock. I checked with our supplier though and they think it should be available by the end of next month. But if you’d rather not wait that long, ...
+                          <div>
+                      </div>
+                    ">
+                      Vintage Table Lamp
+                    </a>
+                    
+                  </div>
+                  <div class="details row">
+                    <div class="col-md">
+                      <img src="images/name.png"/>
+                      <span class="pop agent" data-container="body" data-toggle="popover" data-placement="bottom" 
+                        data-content="
+                          <div class='name-popover'>
+                            <div class='top'>
+                              <div class='pic'>
+                                <img src='images/agent.png'/>
+                              </div>
+                              <div class='details'>
+                                <div class='name'>
+                                  Matt Rogers
+                                </div>
+                                <div class='link'>
+                                  <a href='#'>View tickets</a>
+                                </div>
+                              </div>
+                            </div>
+                            <div class='bottom'>
+                              <div class='pic'>
+                                <img src='images/email.png'/>
+                              </div>
+                              <div class='email'>
+                                  matt.rogers@gmail.com
+                              </div>
+                            </div>
+                          </div>
+                        ">
+                        Matt Rogers
+                      </span>
+                    </div>
+                    <div class="col-md" >
+                      <img src="images/calendar.png"/>
+                      Responded a minute ago
+                    </div>
+                    <div class="col-md">
+                      <img src="images/time.png"/>
+                      Due in 5 days
+                    </div>
+                  </div>
+                </div>
+                <div class="right col-md">
+                  <div class="selection-list" data-toggle="tooltip" data-placement="left" title="Priority">
+                    <div class="icon">
+                      <img src="images/priority.png"/>
+                    </div>
+                    <select class="selectpicker" data-width="150px"data-style="btn-white">
+                        <option>Low</option>
+                        <option>Medium</option>
+                        <option>High</option>
+                        <option>Urgent</option>
+                    </select>
+                  </div>
+
+                  <div class="selection-list" data-toggle="tooltip" data-placement="left" title="Group">
+                    <div class="icon">
+                      <img src="images/group.png"/>
+                    </div>
+                    <select class="selectpicker" data-width="150px" data-style="btn-white">
+                        <option>Unassigned</option>
+                        <option>Group1</option>
+                        <option>Group2</option>
+                    </select>
+                  </div>
+
+                  <div class="selection-list" data-toggle="tooltip" data-placement="left" title="Agent">
+                    <div class="icon">
+                      <img src="images/agent.png"/>
+                    </div>
+                    <select class="selectpicker" data-width="150px" data-style="btn-white">
+                        <option>Unassigned</option>
+                        <option>Agent1</option>
+                        <option>Agent2</option>
+                    </select>
+                  </div>
+
+                  <div class="selection-list" data-toggle="tooltip" data-placement="left" title="Status">
+                    <div class="icon">
+                      <img src="images/status.png"/>
+                    </div>
+                    <select class="selectpicker" data-width="150px" data-style="btn-white">                          <option>Open</option>
+                        <option>Pending</option>
+                        <option>Resolved</option>
+                        <option>Closed</option>
+                        <option>Waiting on customer</option>
+                        <option>Waiting on third party</option>
+                    </select>
+                  </div>
+
+
+                </div>
+              </div>
+              
+             
+            </div>
+            <!---------------------------- TICKET LIST END --------------------------------------->
+
+
+            <!---------------------------- FILTER LIST START --------------------------------------->          
+            <div class="collapse filter-list col-md-3 order-first order-md-last" id="filter-list-id">
+              <div class="for-scrolling">
+                <div class="heading">
+                  <div>
+                    FILTERS
+                  </div>
+                  <div class="pic" onclick=hideFilters()>
+                    +
+                  </div>
+                </div>
+                <div class="list">
+                  <div class="item">
+                    <div class="name">
+                      Agents
+                    </div>
+                    <select onchange=checkForDisablingApply(this) class="selectpicker ml-2 filter-sel"  data-live-search="true" multiple title="Any" id="filter-sel-1">
+                      <option>Agent1</option>
+                      <option>Agent2</option>
+                      <option>Unassigned</option>
+                    </select>
+                  </div>  
+                  
+                  <div class="item">
+                    <div class="name">
+                      Groups
+                    </div>
+                    <select onchange=checkForDisablingApply(this) class="selectpicker ml-2 filter-sel" data-size="5"  data-live-search="true" multiple title="Any" id="filter-sel-2">
+                      <option>Account Managers</option>
+                      <option>Billing</option>
+                      <option>Escalations</option>
+                      <option>Product Management</option>
+                      <option>QA</option>
+                      <option>Replacement</option>
+                      <option>Sales</option>
+                      <option>Shipping and Delivery</option>
+                      <option>Unassigned</option>
+                    </select>
+                  </div>  
+
+                  <div class="item">
+                    <div class="name">
+                      Created
+                    </div>
+                    <select onchange=checkForDisablingApply(this) class="selectpicker ml-2 filter-sel" data-size="5"  data-live-search="true" title="Any" id="filter-sel-3">
+                      <option>Within 5 min</option>
+                      <option>Within 15 min</option>
+                      <option>Within 30 min</option>
+                      <option>Within 1 hour</option>
+                      <option>Within 4 hours</option>
+                      <option>Within 12 hours</option>
+                      <option>Within 24 hours</option>
+                      <option>Today</option>
+                      <option>Yesterday</option>
+                      <option>This week</option>
+                      <option>Last 7 days</option>
+                      <option>This month</option>
+                      <option>Last 30 days</option>
+                      <option>Last 60 days</option>
+                      <option>Last 180 days</option>
+                      <option>Unassigned</option>
+                    </select>
+                  </div>  
+
+                  <div class="item">
+                    <div class="name">
+                      Resolution due by
+                    </div>
+                    <select onchange=checkForDisablingApply(this) class="selectpicker ml-2 filter-sel" data-size="5"  data-live-search="true" multiple title="Any" id="filter-sel-4">
+                      <option>Overdue</option>
+                      <option>Today</option>
+                      <option>Tomorrow</option>
+                      <option>Next 8 hours</option>
+                      <option>Next 4 hours</option>
+                      <option>Next 2 hours</option>
+                      <option>Next hour</option>
+                      <option>Next 30 minutes</option>
+                    </select>
+                  </div>  
+
+                  <div class="item">
+                    <div class="name">
+                      First Response due by
+                    </div>
+                    <select onchange=checkForDisablingApply(this) class="selectpicker ml-2 filter-sel" data-size="5"  data-live-search="true" multiple title="Any" id="filter-sel-5">
+                      <option>Overdue</option>
+                      <option>Today</option>
+                      <option>Tomorrow</option>
+                      <option>Next 8 hours</option>
+                      <option>Next 4 hours</option>
+                      <option>Next 2 hours</option>
+                      <option>Next hour</option>
+                      <option>Next 30 minutes</option>
+                    </select>
+                  </div>
+                  
+                  <div class="item">
+                    <div class="name">
+                      Next Response due by
+                    </div>
+                    <select onchange=checkForDisablingApply(this) class="selectpicker ml-2 filter-sel" data-size="5"  data-live-search="true" multiple title="Any" id="filter-sel-6">
+                      <option>Overdue</option>
+                      <option>Today</option>
+                      <option>Tomorrow</option>
+                      <option>Next 8 hours</option>
+                      <option>Next 4 hours</option>
+                      <option>Next 2 hours</option>
+                      <option>Next hour</option>
+                      <option>Next 30 minutes</option>
+                    </select>
+                  </div>  
+
+                  <div class="item">
+                    <div class="name">
+                      Status
+                    </div>
+                    <select onchange=checkForDisablingApply(this) class="selectpicker ml-2 filter-sel" data-size="5"  data-live-search="true" multiple title="Any" id="filter-sel-7">
+                      <option>All unresolved</option>
+                      <option>Open</option>
+                      <option>Pending</option>
+                      <option>Resolved</option>
+                      <option>Closed</option>
+                      <option>Waiting on customer</option>
+                      <option>Waiting on third party</option>
+                    </select>
+                  </div>  
+
+                  <div class="item">
+                    <div class="name">
+                      Priority
+                    </div>
+                    <select onchange=checkForDisablingApply(this) class="selectpicker ml-2 filter-sel" data-size="5"  data-live-search="true" multiple title="Any" id="filter-sel-8">
+                      <option>Low</option>
+                      <option>Medium</option>
+                      <option>High</option>
+                      <option>Urgent</option>
+                    </select>
+                  </div>  
+                  
+                  <div class="item">
+                    <div class="name">
+                      Type
+                    </div>
+                    <select onchange=checkForDisablingApply(this) class="selectpicker ml-2 filter-sel" data-size="5"  data-live-search="true" multiple title="Any" id="filter-sel-9">
+                      <option>None</option>
+                      <option>Question</option>
+                      <option>Incident</option>
+                      <option>Problem</option>
+                      <option>Feature Request</option>
+                      <option>Refund</option>
+                    </select>
+                  </div>  
+
+                  <div class="item">
+                    <div class="name">
+                      Source
+                    </div>
+                    <select onchange=checkForDisablingApply(this) class="selectpicker ml-2 filter-sel" data-size="5"  data-live-search="true" multiple title="Any" id="filter-sel-10">
+                      <option>Email</option>
+                      <option>Portal</option>
+                      <option>Phone</option>
+                      <option>Forum</option>
+                      <option>Twitter</option>
+                      <option>Facebook</option>
+                      <option>Chat</option>
+                      <option>Mobihelp</option>
+                      <option>Feedback widget</option>
+                      <option>Outbound Email</option>
+                      <option>Ecommerce</option>
+                      <option>Bots</option>
+                    </select>
+                  </div> 
+                  
+                  <div class="item">
+                    <div class="name">
+                      Tags
+                    </div>
+                    <select onchange=checkForDisablingApply(this) class="selectpicker ml-2 filter-sel" data-size="5"  data-live-search="true" multiple title="Any" id="filter-sel-11">
+                      <option>Tag1</option>
+                      <option>Tag2</option>
+                    </select>
+                  </div> 
+
+                  <div class="item">
+                    <div class="name">
+                      Companies
+                    </div>
+                    <select onchange=checkForDisablingApply(this) class="selectpicker ml-2 filter-sel" data-size="5"  data-live-search="true" multiple title="Any" id="filter-sel-12">
+                      <option>Company1</option>
+                      <option>Company2</option>
+                    </select>
+                  </div> 
+
+                  <div class="item">
+                    <div class="name">
+                      Contacts
+                    </div>
+                    <select onchange=checkForDisablingApply(this) class="selectpicker ml-2 filter-sel" data-size="5"  data-live-search="true" multiple title="Any" id="filter-sel-13">
+                      <option>Contact1</option>
+                      <option>Contact2</option>
+                    </select>
+                  </div> 
+                  
+                  
+
+                </div> <!--list end-->
+              </div>
+              <div class="disabled apply-button-div">
+                <div class="apply-button">
+                  Apply
+                </div>
+              </div>
+            </div><!--filter list end-->
+        </div>
+
+        
+        
+        
+    </div> <!--wrapper end-->
+
+
+{% endblock %}

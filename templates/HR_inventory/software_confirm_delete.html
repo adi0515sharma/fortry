@@ -1,0 +1,16 @@
+{% extends "base1.html" %}
+{% block content %}
+	<div class = "content-section" style="margin-top: 70px; text-align: center; align-items: center; margin-left: 500px;">
+		<form method = "POST">
+			{% csrf_token %}
+			<fieldset class="form-group">
+				<legend class="border-bottom mb-4">Delete Item</legend>
+				<h2>Are you sure you want to delete the item "{{ object.name }}" ?</h2>
+			</fieldset>
+			<div class="form-group">
+				<button class="btn btn-outline-danger" type="submit">Yes, Delete</button>
+				<a class="btn btn-outline-secondary" href = "{% url 'HR_inventory:softwares' %}" type="submit">Cancel</a>
+			</div>
+		</form>
+	</div>
+{% endblock content %}

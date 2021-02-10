@@ -1,0 +1,317 @@
+{% extends 'base1.html' %}
+{% load static %}
+{% block head %}
+<style>
+
+.main-container-settings {
+    padding: 0px;
+    width: 100%;
+    margin-right: 0.5rem;
+    margin-bottom: 3rem;
+}
+
+.main-container-settings .box {
+    border: 1px solid #cfd7df;
+    box-shadow: 0 2px 4px 0 rgba(24, 50, 71, .08);
+    border-radius: 4px;
+    background-color: white;
+    margin: 0rem 10rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+@media(max-width: 600px) {
+    .main-container-settings .box {
+        margin: 0rem 3rem;
+    }
+}
+
+.main-container-settings .box .heading {
+    margin-left: 1rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.main-container-settings .box .row {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.main-container-settings .box .row .setting {
+    display: flex;
+    align-items: center;
+    margin: 0.5rem 1rem;
+    padding: 1rem;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.main-container-settings .box .row .setting:hover {
+    border: 1px solid rgba(17, 74, 133, 0.6);
+    background-image: radial-gradient(white, rgba(135, 135, 135, 0.3));
+}
+
+.main-container-settings .box .row .setting .icon {
+    margin-right: 1rem;
+}
+
+.main-container-settings .box .row .setting .icon img {
+    height: 2rem;
+    width: 2rem;
+}
+
+.main-container-settings .box .row .empty {
+    visibility: hidden;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+
+
+<div class="container-fluid row main-container-settings" >
+    
+    <!--first box end-->
+
+    <div class="box container-fluid">
+        <div class="heading">
+            General Settings
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-md setting" onclick="location.href='{% url 'HR_user_profiles:employees' %}'">
+                <div class="icon">
+                    <img src="{% static 'images/settings-agent.png' %}" />
+                </div>
+                <div class="name">
+                    Employees
+                </div>
+            
+            </div>
+            <div class="col-md setting" onclick="location.href='{% url 'HR_user_profiles:create-account' %}'">
+                <div class="icon">
+                    <img src="{% static 'images/settings-group.png' %}" />
+                </div>
+                <div class="name">
+                    Add Employees
+                </div>
+            </div>
+            <div class="col-md setting" onclick="location.href='{% url 'HR_leaves:working-days' %}'">
+                <div class="icon">
+                    <img src="{% static 'images/calendar.png' %}" />
+                </div>
+                <div class="name">
+                    Working Days
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md setting" onclick="location.href='{% url 'HR_inventory:inventory-home' %}'">
+                <div class="icon">
+                    <img src="{% static 'images/settings-helpdesk.png' %}" />
+                </div>
+                <div class="name">
+                    Inventory
+                </div>
+            </div>
+            <div class="col-md setting" onclick="location.href='{% url 'HR_problems:problems' %}'">
+                <div class="icon">
+                    <img src="{% static 'images/issue.png' %}" />
+                </div>
+                <div class="name">
+                    Issue
+                </div>
+            </div>
+            <div class="col-md setting" onclick="location.href='{% url 'HR_payroll:employee-list' %}'">
+                <div class="icon">
+                    <img src="{% static 'images/heading-image.png' %}" />
+                </div>
+                <div class="name">
+                    Payroll
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md setting" onclick="location.href='{% url 'HR_leaves:list_approval' %}'">
+                <div class="icon">
+                    <img src="{% static 'images/settings-agent.png' %}" />
+                </div>
+                <div class="name">
+                    Approve Leave
+                </div>
+            </div>
+            <div class="col-md setting" onclick="location.href='{% url 'HR_expenses:list_expenses' %}'">
+                <div class="icon">
+                    <img src="{% static 'images/settings-group.png' %}" />
+                </div>
+                <div class="name">
+                    Approve Expenses
+                </div>
+            </div>
+            <div class="col-md setting" onclick="location.href='{% url 'HR_leaves:all_approvals' %}'">
+                <div class="icon">
+                    <img src="{% static 'images/settings-user.png' %}" />
+                </div>
+                <div class="name">
+                    All Approvals
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md setting">
+                <div class="icon">
+                    <img src="{% static 'images/settings-security.png' %}" />
+                </div>
+                <div class="name">
+                    Security
+                </div>
+            </div>
+            <div class="col-md setting">
+                <div class="icon">
+                    <img src="{% static 'images/settings-sla.png' %}" />
+                </div>
+                <div class="name">
+                    SLA Policies
+                </div>
+            </div>
+            <div class="col-md setting">
+                <div class="icon">
+                    <img src="{% static 'images/settings-business-hours.png' %}" />
+                </div>
+                <div class="name">
+                    Business Hours
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md setting">
+                <div class="icon">
+                    <img src="{% static 'images/settings-multiple-products.png' %}" />
+                </div>
+                <div class="name">
+                    Multiple Products
+                </div>
+            </div>
+            <div class="col-md setting">
+                <div class="icon">
+                    <img src="{% static 'images/settings-tag.png' %}" />
+                </div>
+                <div class="name">
+                    Tags
+                </div>
+            </div>
+            <div class="col-md setting">
+                <div class="icon">
+                    <img src="{% static 'images/settings-field-service.png' %}" />
+                </div>
+                <div class="name">
+                    Field Service Management
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- second -->
+
+    <div class="box container-fluid">
+        <div class="heading">
+            Support Channels
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-md setting">
+                <div class="icon">
+                    <img src="{% static 'images/settings-email.png' %}" />
+                </div>
+                <div class="name">
+                    Email
+                </div>
+            </div>
+            <div class="col-md setting">
+                <div class="icon">
+                    <img src="{% static 'images/settings-portal.png' %}" />
+                </div>
+                <div class="name">
+                    Portals
+                </div>
+            </div>
+            <div class="col-md setting">
+                <div class="icon">
+                    <img src="{% static 'images/settings-chat.png' %}" />
+                </div>
+                <div class="name">
+                    Chat
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md setting">
+                <div class="icon">
+                    <img src="{% static 'images/settings-phone.png' %}" />
+                </div>
+                <div class="name">
+                    Phone
+                </div>
+            </div>
+            <div class="col-md setting">
+                <div class="icon">
+                    <img src="{% static 'images/settings-twitter.png' %}" />
+                </div>
+                <div class="name">
+                    Twitter
+                </div>
+            </div>
+            <div class="col-md setting">
+                <div class="icon">
+                    <img src="{% static 'images/settings-facebook.png' %}" />
+                </div>
+                <div class="name">
+                    Facebook
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md setting">
+                <div class="icon">
+                    <img src="{% static 'images/settings-form.png' %}" />
+                </div>
+                <div class="name">
+                    Feedback Form
+                </div>
+            </div>
+            <div class="col-md setting">
+                <div class="icon">
+                    <img src="{% static 'images/settings-widgets.png' %}" />
+                </div>
+                <div class="name">
+                    Widgets
+                </div>
+            </div>
+            <div class="col-md setting empty"></div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- <div class="container" style="margin-left: 80px; margin-top:80px;">
+{% if user.profile.is_manager %}    
+<h1>Links for only for you admin;-)</h1>
+
+    <ul>
+    {% if perms.user_profiles.can_evaluate_all and user.is_authenticated %}
+        <li><a href="{% url 'HR_user_profiles:create-account' %}"> Add Employee</a></li>
+        <li><a href="{% url 'HR_user_profiles:employees' %}"> Employees</a></li>
+    {% endif %}
+    </ul>
+
+{% endif %}
+</div> -->
+<script>
+    $(document).ready(function() {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+{% endblock %}

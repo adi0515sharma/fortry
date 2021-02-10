@@ -1,0 +1,20 @@
+{% extends "base1.html" %}
+{% block content %}
+<div class="container" style="margin-top: 90px;">
+{% if amount == '-' %}
+    <h1>Employee's monthly salary is not decided yet</h1>
+{% else %}
+<div align="center" style="font-weight: bold;">
+    Payable amount to {{ user }}
+</div>
+<br>
+<div class="list-group">
+<div class="list-group-item"><span style="float: left;">Monthly salary</span><span style="float: right;">Rs. {{ salary }}</span></div>
+<div class="list-group-item"><span style="float: left;">Leaves taken </span><span style="float: right;"> {{ days }}</span></div>
+<div class="list-group-item"><span style="float: left;">Daily salary</span><span style="float: right;">Rs. {{ daily_salary }}</span></div>
+<div class="list-group-item"><span style="float: left;">Amount deducted</span><span style="float: right;">Rs. {{daily_salary}} X {{ days }}</span></div>
+<div class="list-group-item"><span style="float: left;">Final Amount </span><span style="float: right;">Rs. {{ amount }}</span></div>
+</div>
+{% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,486 @@
+{% load static %}
+{% load notifications_tags %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Dashboard|{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/Dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'css/cdn/bootstrap.min.css' %}">
+
+    <link rel="stylesheet"
+        href="{% static 'fonts/fonts.googleapis.css' %}">
+
+    <link rel="stylesheet" href="{% static 'fonts/fontawesome-all.min.css' %}">
+    
+    <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+
+    <style>
+
+        @media(max-width: 768px)
+        {
+            #brand-image
+            {
+                display: none;
+            }
+        }
+    </style>
+    
+    {% block head %}
+    {% endblock %}
+</head>
+<body>
+
+  <body id="page-topeee" class="sidebar-toggled">
+    <div id="wrapper">
+        <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion p-0 toggled"
+            style="background-color: #124559; max-width: 70px;">
+            <div class="container-fluid d-flex flex-column p-0 sticky-top">
+                <div style="background-color: white; width: 100%;" class="m-0">
+                    <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0 p-0"
+                        href="{% url 'HR_tasks:dashboard' %}">
+                        <div class="sidebar-brand-icon"><img src="assets/img/logo.jpeg" width="" /></div>
+                        <!-- <div class="sidebar-brand-text mx-0"><span style="color: 5);">ExpoundBiz</span></div> -->
+                    </a>
+                </div>
+                <!-- <hr class="sidebar-divider my-0"> -->
+
+                
+                {% if user.is_authenticated %}
+                <ul class="nav navbar-navs text-light" id="accordionSidebar">
+                    <li class="nav-item mt-3" role="presentation" data-toggle="tooltip" data-placement="right"
+                    title="Dashboard" >
+                    <a class="nav-link active" href="{% url 'HR_tasks:dashboard' %}" style="max-width: 70px;">
+                            <i class="fas fa-tachometer-alt" style="font-size: 25px;"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item mt-3" role="presentation" data-toggle="tooltip" data-placement="right"
+                        title="Apply Leave">
+                        <a class="nav-link" href="{% url 'HR_leaves:create-leave' %}"  style="max-width: 70px;">
+                            <i class="fa fa-tags" aria-hidden="true" style="font-size: 25px;"></i>
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item mt-3" role="presentation" onmouseover=showContactList()
+                        onmouseout=hideContactList()>
+                        <div class="contact-list">
+                            <div class="list-item">
+                                <a href="{% url 'HR_tasks:my_event' %}">My Events</a>
+                            </div>
+                            {% if request.user.profile.is_manager %}
+                            <div class="list-item">
+                                <a href="{% url 'HR_user_profiles:team' %}">My Team</a>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <a class="nav-link" href="{% url 'HR_tasks:my_event' %}"  style="max-width: 70px;">
+                            <i class="fa fa-address-book" aria-hidden="true" style="font-size: 25px;"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item mt-3" role="presentation" data-toggle="tooltip" data-placement="right"
+                        title="My Leaves">
+                        <a class="nav-link" href="{% url 'HR_leaves:my_leave_list' %}"  style="max-width: 70px;">
+                            <i class="fas fa-check-circle" style="font-size: 25px;"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item mt-3" role="presentation" onmouseover=showReportList()
+                        onmouseout=hideReportList()>
+                        <div class="report-list">
+                            <div class="list-item">
+                                <a href="{% url 'HR_expenses:Apply_expenses'%}">Apply Expences</a>
+                            </div>
+                            <div class="list-item">
+                                <a href="{% url 'HR_expenses:my_expence_list' %}">My Expences</a>
+                            </div>
+                        </div>
+                        <a class="nav-link" href="#" style="max-width: 70px;">
+                            <i class="fas fa-star" style="font-size: 25px;"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item mt-3" role="presentation" data-toggle="tooltip" data-placement="right"
+                        title="My Issues">
+                        <a class="nav-link" href="{% url 'HR_problems:my_problems' %}" style="max-width: 70px;">
+                            <i class="fas fa-exclamation-triangle" style="font-size: 25px;"></i>
+                        </a>
+                    </li>
+                    {% if request.user.profile.is_manager %}
+                    <li class="nav-item mt-3" role="presentation" data-toggle="tooltip" data-placement="right"
+                        title="Admin">
+                        <a class="nav-link" href="{% url 'HR_tasks:admin' %}" style="max-width: 70px;">
+                            <i class="fas fa-cogs" style="font-size: 25px;"></i>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+                {% endif %}
+                <!-- <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div> -->
+            </div>
+        </nav>
+        <div class="d-flex flex-column" id="content-wrapper">
+            <div id="content">
+                <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar fixed-top">
+
+                    <div class="container-fluid">
+                        <button class="btn btn-link d-md-none rounded-circle mr-3"
+                            id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i>
+                        </button>
+                        <div class="d-sm-flex justify-content-between align-items-center">
+                            <img src="{% static 'images/logo.jpeg' %}" width="45" id="brand-image" />
+                            <h3 class="text-dark mb-0 ml-md-3">Dashboard </h3>
+                            
+                              
+                        </div>
+                        <ul class="nav navbar-nav flex-nowrap ml-auto">
+                            <li class="nav-item dropdown d-sm-none no-arrow"><a class="dropdown-toggle nav-link"
+                                    data-toggle="dropdown" aria-expanded="false" href="#"><i
+                                        class="fas fa-search"></i></a>
+                                <div class="dropdown-menu dropdown-menu-right p-3 animated--grow-in" role="menu"
+                                    aria-labelledby="searchDropdown">
+                                    <!-- mobile form -->
+                                    <form class="form-inline mr-auto navbar-search w-100"  method="GET" action="/HR/search/" accesskey="s">
+                                        <div class="input-group"><input class="bg-light form-control border-0 small"
+                                                type="text" placeholder="Search for.."  name= "q">
+                                            <div class="input-group-append"><button class="btn btn-primary py-0"
+                                                    type="button"><i class="fas fa-search"></i></button></div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown no-arrow mx-1" role="presentation" data-toggle="tooltip"
+                                data-placement="bottom" title="Get Started">
+                                <div class="nav-item dropdown no-arrow">
+                                    <a class="dropdown-toggle nav-link" aria-expanded="false" href="#">
+                                        <i class="fas fa-rocket fa-fw"></i>
+                                    </a>
+                                </div>
+                            </li>
+
+                            <li class="nav-item dropdown no-arrow" role="presentation" data-toggle="tooltip"
+                                data-placement="bottom" title="New">
+                                <div class="nav-item dropdown no-arrow">
+                                    <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false"
+                                        href="#">
+                                        <i class="fas fa-plus-square fa-fw"></i>
+                                    </a>
+                                    <div class="dropdown-menu shadow dropdown-menu-right animated--grow-in" role="menu">
+                                        <a class="dropdown-item" role="presentation" href="#">
+                                            <i class="fas fa-tags fa-sm fa-fw mr-2 text-gray-400"></i>
+                                            &nbsp;New Ticket
+                                        </a>
+                                        <a class="dropdown-item" role="presentation" href="#">
+                                            <i class="fas fa-envelope fa-sm fa-fw mr-2 text-gray-400"></i>
+                                            &nbsp;New Email
+                                        </a>
+                                        <a class="dropdown-item" role="presentation" href="#">
+                                            <i class="fas fa-address-book fa-sm fa-fw mr-2 text-gray-400"></i>
+                                            &nbsp;New Contact
+                                        </a>
+                                        <a class="dropdown-item" role="presentation" href="#">
+                                            <i class="fas fa-building fa-sm fa-fw mr-2 text-gray-400"></i>
+                                            &nbsp;New Company
+                                        </a>
+                                        <div class="custom-control custom-switch dropdown-item">
+                                          <input type="checkbox" class="custom-control-input" id="customSwitches">
+                                          <label class="custom-control-label" for="customSwitches">Enable Shortcut keys</label>
+                                        </div>
+                                        <button type="button" id="id_of_button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
+                                            Keyboard Shortcuts(ctrl+?)
+                                        </button>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li class="nav-item dropdown no-arrow mx-1" role="presentation" data-toggle="tooltip"
+                                data-placement="bottom" title="Notifications">
+                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link"
+                                        data-toggle="dropdown" aria-expanded="false" href="#"><span
+                                            class="badge badge-danger badge-counter">{% notifications_unread as unread_count %}
+                                            {% if unread_count %}
+                                            {{ unread_count }}
+                                            {% else %} 0
+                                            {% endif %}+</span><i
+                                            class="fas fa-bell fa-fw"></i></a>
+                                    <div class="dropdown-menu dropdown-menu-right dropdown-list dropdown-menu-right animated--grow-in"
+                                        role="menu" style="overflow: scroll; height: 43em;">
+                                        <h6 class="dropdown-header">alerts center</h6>
+                                        {% if notification %}
+                                        {% for n in notification %}
+                                        <a class="d-flex align-items-center dropdown-item" href="{% url 'HR_tasks:notification_id' n.id %}">
+                                            <div class="mr-3">
+                                                <div class="bg-primary icon-circle"><i
+                                                        class="fas fa-file-alt text-white"></i></div>
+                                            </div>
+                                            
+                                            <div>
+                                                {{ n }}
+                                                
+                                            </div>
+                                        </a>
+                                        {% endfor %}
+                                        {% endif %}
+                                        <p class="text-center dropdown-item small text-gray-500">read alerts
+                                            Alerts</p>
+                                        {% if read_notification %}
+                                        {% for n in read_notification %}
+                                        <a class="d-flex align-items-center dropdown-item" href="{% url 'HR_tasks:notification_id' n.id %}">
+                                            <div class="mr-3">
+                                                <div class="bg-success icon-circle"><i
+                                                        class="fas fa-donate text-white"></i></div>
+                                            </div>
+                                            {{ n }}
+                                        </a>
+                                        {% endfor %}
+                                        {% endif %}
+                                        <a class="text-center dropdown-item small text-gray-500" href="#">Show All
+                                            Alerts</a>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <div class="d-none d-sm-block topbar-divider"></div>
+                            <li class="nav-item dropdown no-arrow" role="presentation">
+                                <div class="nav-item dropdown mt-3  no-arrow">
+                                    <form
+                                        class="form-inline d-none d-sm-inline-block  ml-md-3 my-2 my-md-0 mw-100 navbar-search" method="GET" action="/HR/search/" accesskey="s">
+                                        <div class="input-group"><input class="bg-light form-control border-0 small"
+                                                type="text" placeholder="Search for ..." name= "q">
+                                            <div class="input-group-append"><button class="btn btn-primary py-0"
+                                              type="submit"><i class="fas fa-search"></i></button></div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </li>
+                            {% if user.is_authenticated %}
+                            <li class="nav-item dropdown no-arrow" role="presentation">
+                                <div class="nav-item dropdown no-arrow">
+                                    <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false"
+                                        href="#">
+                                        <span class="d-none d-lg-inline mr-2 text-gray-600 small">
+                                          {{ request.user.username }}
+                                        </span>
+                                        <img class="border rounded-circle img-profile"
+                                            src="assets/img/avatars/avatar1.jpeg">
+                                    </a>
+                                    <div class="dropdown-menu shadow dropdown-menu-right animated--grow-in" role="menu">
+                                        <a class="dropdown-item" role="presentation" href="#">
+                                            <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                            &nbsp;Profile
+                                        </a>
+                                        <a class="dropdown-item" role="presentation" href="#">
+                                            <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                            &nbsp;Settings
+                                        </a>
+                                        <a class="dropdown-item" role="presentation" href="#">
+                                            <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                                            &nbsp;Activity log
+                                        </a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" role="presentation" href="{% url 'account_logout' %}">
+                                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                            &nbsp;Logout
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+                            {% else %}
+                            <li class="nav-item dropdown no-arrow" role="presentation">
+                              <div class="nav-item dropdown no-arrow">
+                                  <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false"
+                                      href="{% url 'account_login' %}">]
+                                      <span class="d-none d-lg-inline mr-2 text-gray-600 small">
+                                        Login
+                                    </span>
+                                    <img class="border rounded-circle img-profile"
+                                        src="assets/img/avatars/avatar1.jpeg">
+                                </a>
+                                </li>
+                              </div>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </nav>
+
+    <div style="margin-top: 105px;">
+    {% block content %}
+    {% endblock %}
+</div>
+  </div>
+  
+
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Keyboard Shortcuts</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="container">
+        <h3 style="color: rgb(241, 197, 0); align-items: center;"> 
+            Keyboard shortcuts <kbd> ? </kbd>
+        </h3>
+        <hr>
+        <div class="row" style="padding: 1em;">
+            <div class="col-md-4">
+                <h6 class="shortcuts_h6">Navigation</h6>
+                <ul class="list_shortcut">
+                    <li class='shortcuts_li'><pre>Dashboard             <kbd>alt</kbd>  <kbd>h</kbd></pre></li>
+                    <li class='shortcuts_li'><pre>Inventory             <kbd>ctrl</kbd> <kbd>i</kbd></pre></li>
+                    <li class='shortcuts_li'><pre>Problems              <kbd>alt</kbd> <kbd>p</kbd></pre></li>
+                    <li class='shortcuts_li'><pre>Apply Leave           <kbd>alt</kbd>  <kbd>l</kbd></pre></li>
+                    <li class='shortcuts_li'><pre>My Events             <kbd>alt</kbd> <kbd>c</kbd></pre></li>
+                    
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h6 class="shortcuts_h6">Actions(in List & Specific Tickets)</h6>
+                <ul class="list_shortcut">
+                    <li class='shortcuts_li'><pre>Sign Out              <kbd>alt</kbd> <kbd>o</kbd></pre></li>
+                    <li class='shortcuts_li'><pre>My Profile            <kbd>alt</kbd> <kbd>m</kbd></pre></li>
+                    <li class='shortcuts_li'><pre>Admin                 <kbd>alt</kbd> <kbd>a</kbd></pre></li>
+                    <li class='shortcuts_li'><pre>Search                <kbd>alt</kbd> <kbd>s</kbd></pre></li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h6 class="shortcuts_h6">Actions(in List)</h6>
+                <ul class="list_shortcut">
+                    <li class='shortcuts_li'><pre>Dashboard             <kbd>d</kbd> <kbd>b</kbd></pre></li>
+                    <li class='shortcuts_li'><pre>Inventory             <kbd>i</kbd> <kbd>o</kbd></pre></li>
+                    <li class='shortcuts_li'><pre>Problems              <kbd>p</kbd> <kbd>l</kbd></pre></li>
+                    <li class='shortcuts_li'><pre>Apply Leave           <kbd>a</kbd> <kbd>l</kbd></pre></li>
+                    <li class='shortcuts_li'><pre>My Events             <kbd>m</kbd> <kbd>e</kbd></pre></li>
+                </ul>
+            </div>
+        </div>
+        
+        
+    </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+
+<script>
+  var initial = Cookies.get('toggle');
+  if(initial=="true"){
+    $('#customSwitches').attr("checked","true");
+  }
+  else if(initial==="false"){
+    $('#customSwitches').attr("checkbox","false");
+  }
+  $("#customSwitches").on('change', function() {
+    Cookies.remove('toggle', { path:'' });
+    var val = $('#customSwitches').prop('checked');
+    Cookies.set('toggle', val, { expires:70000000 });
+    console.log(Cookies.get('toggle'));
+    location.reload();
+    
+  });
+
+
+
+  if(Cookies.get('toggle')=="true"){
+    
+  function openLink1(){
+    var url = "{% url 'HR_inventory:inventory-home' %}";
+    window.open(url,"_self");
+  }
+
+  function openLink2(){
+    var url = "{% url 'HR_tasks:dashboard' %}";
+    window.open(url,"_self");
+  }
+
+  function openLink3(){
+    var url = "{% url 'HR_leaves:create-leave' %}";
+    window.open(url,'_self');
+  }
+
+  function openLink4(){
+    window.open("{% url 'HR_tasks:admin' %}",'_self')
+  }
+  function openLink5(){
+    window.open("{% url 'HR_problems:list_prob' %}",'_self')
+  }
+  function openLink6(){
+    window.open("{% url 'HR_tasks:my_event' %}",'_self')
+  }
+  function openLink7(){
+    window.open("{% url 'HR_user_profiles:profile' %}",'_self')
+  }
+  function openLink8(){
+    window.open("{% url 'account_logout' %}",'_self')
+  }
+
+  function doc_keyUp(e) {
+
+  if (e.altKey && e.keyCode == 72) {
+      openLink2();
+  }
+  if (e.ctrlKey && e.keyCode==73) {
+      openLink1();
+  }
+  if (e.altKey && e.keyCode == 76) {
+      openLink3();
+  }
+  if (e.keyCode==65 && e.altKey){
+    openLink4();
+  }
+  if (e.altKey && e.keyCode == 80) {
+      openLink5();
+  }
+  if (e.altKey && e.keyCode == 67) {
+      openLink6();
+  }
+  if (e.keyCode == 77 && e.altKey) {
+      openLink7();
+  }
+  if (e.altKey && e.keyCode == 79) {
+      openLink8();
+  }
+
+  if(e.ctrlKey && e.keyCode == 191){
+    $("#id_of_button").click();
+  }
+  }
+  document.addEventListener('keyup', doc_keyUp, false);
+  
+}
+</script>
+
+
+<script src="{% static 'js/cdn_base/popper.min.js' %}"></script>
+<script src="{% static 'js/cdn_base/bootstrap.min.js' %}"></script>
+
+<script src="{% static 'js/theme.js' %}"></script>
+<!-- For tooltip -->
+<script>
+$(document).ready(function () {
+  $('[data-toggle="tooltip"]').tooltip();
+});
+</script>
+<script src="{% static 'js/plugin.js' %}"></script>
+<script src="{% static 'js/cdn_base/moment.min.js' %}"></script>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+
+</body>
+
+</html>
